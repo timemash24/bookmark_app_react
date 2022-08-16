@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './routes/Home';
+import Add from './routes/Add';
 import Edit from './routes/Edit';
 
 function App() {
@@ -7,7 +8,8 @@ function App() {
     <Router basename={process.env.PUBLIC_URL}>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/Edit" element={<Edit />} />
+        <Route path="/add" element={<Add />} />
+        <Route path="/edit" element={<Edit />} />
       </Routes>
     </Router>
   );

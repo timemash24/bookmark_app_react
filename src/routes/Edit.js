@@ -1,101 +1,120 @@
 import { useState } from 'react';
-
-const FOLDER_NAME_REGEX = /\"\>.*\<\/H3\>/g;
-const BOOKMARK_NAME_REGEX = /\>.*\<\/A\>/g;
-const URL_REGEX = /https?:\/\/[\w\-\.]+/g;
+import { Link } from 'react-router-dom';
+import FileUploader from '../components/FileUploader';
 
 function Edit() {
-  const [fileResult, setFileResult] = useState('');
-  const [newBookmarkList, setNewBookmarkList] = useState([]);
+  const sample = [
+    {
+      id: 1,
+      name: 'bm1',
+      url: 'https://google.com/',
+      tags: ['tag1', 'tag2', 'tag3'],
+      visit: 0,
+    },
+    {
+      id: 2,
+      name: 'bm2',
+      url: 'https://naver.com/',
+      tags: ['tag3', 'tag4'],
+      visit: 0,
+    },
+    { id: 3, name: 'bm3', url: 'https://aaaa.com/', tags: ['tag1'], visit: 0 },
+  ];
 
-  const getTextInTag = (text) => {
-    const result = text.substring(text.indexOf('>') + 1, text.indexOf('<'));
+  const [checkedItems, setCheckedItems] = useState([]);
+  const [itemName, setItemName] = useState('');
+  const [itemTag, setItemTag] = useState('');
+  const [bChecked, setChecked] = useState(false);
 
-    return result;
-  };
+  const checkedItemHandler = (target) => {
+    const id = parseInt(target.id);
 
-  const getBookmarkInfo = (text) => {
-    // 북마크 폴더명 찾기
-    const dlArr = text.split('<H3');
-
-    let bookmarksByFolder = [];
-
-    for (const dl of dlArr) {
-      const tmpFolder = dl.match(FOLDER_NAME_REGEX);
-      let info = [];
-
-      if (tmpFolder) {
-        const folderName = getTextInTag(tmpFolder[0]);
-        info.push(folderName);
-
-        // 폴더 내 북마크 목록 구하기
-        const dtArr = dl.split('<DT>');
-        for (const dt of dtArr) {
-          const tmpName = dt.match(BOOKMARK_NAME_REGEX);
-          if (tmpName) {
-            // 북마크 이름
-            const name = getTextInTag(tmpName[0]);
-            // console.log(name);
-
-            // 북마크 주소
-            const url = dt.match(URL_REGEX)[0];
-            // console.log(url);
-
-            info.push([name, url]);
-          }
-        }
-
-        bookmarksByFolder.push(info);
-      }
+    if (checkedItems.includes(id)) {
+      if (checkedItems.length > 1)
+        setItemName(sample.find((bm) => bm.id === checkedItems[0]).name);
+      else setItemName('');
+      setCheckedItems(checkedItems.filter((itemId) => itemId !== id));
+    } else {
+      console.log('add id');
+      setCheckedItems([...checkedItems, id]);
+      setItemName(sample.find((bm) => bm.id === id).name);
     }
-    setNewBookmarkList(bookmarksByFolder);
   };
 
-  const onChange = (e) => {
-    const file = e.target.files[0];
-    const fileReader = new FileReader();
-    fileReader.onload = () => {
-      setFileResult(fileReader.result);
-    };
-    fileReader.readAsText(file);
+  const checkHandler = ({ target }) => {
+    const id = parseInt(target.id);
+
+    if (checkedItems.includes(id)) {
+      if (checkedItems.length > 1)
+        setItemName(sample.find((bm) => bm.id === checkedItems[0]).name);
+      else setItemName('');
+      setCheckedItems(checkedItems.filter((itemId) => itemId !== id));
+    } else {
+      console.log('add id');
+      setCheckedItems([...checkedItems, id]);
+      setItemName(sample.find((bm) => bm.id === id).name);
+    }
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    getBookmarkInfo(fileResult);
+  const nameInputHandler = ({ target }) => {
+    setItemName(target.value);
   };
 
-  const onClick = (e) => {
-    e.preventDefault();
-    console.log(newBookmarkList);
+  const tagInputHandler = ({ target }) => {
+    setItemTag(target.value);
   };
 
+  console.log(checkedItems);
   return (
     <div>
-      <form onSubmit={onSubmit}>
-        <label>북마크 html 파일을 선택하세요</label>
-        <input type="file" accept=".html" onChange={onChange} />
-        <input type="submit" value="추가✨" />
-      </form>
-      <button onClick={onClick}>테스트</button>
-      <div>
-        {newBookmarkList.map((folder, i) => (
-          <h3 key={`folder${i}`}>{folder[0]}</h3>
-        ))}
-        <ul>
-          {newBookmarkList.map((folder) =>
-            folder.map((bookmark, i) =>
-              i !== 0 ? (
-                <li key={`newBookmark${i}`}>
-                  <a href={bookmark[1]} key={`newBookmarkI${i}`}>
-                    {bookmark[0]}
-                  </a>
-                </li>
+      <span>
+        <Link to="/">메인으로</Link>
+      </span>
+
+      <form>
+        <section>
+          <p>
+            <label htmlFor="name">이름</label>
+            {checkedItems.length <= 1 ? (
+              <input
+                type="text"
+                name="name"
+                value={itemName}
+                onChange={nameInputHandler}
+                disabled={checkedItems.length ? false : true}
+              />
+            ) : null}
+          </p>
+          <div>
+            <label htmlFor="tags">태그</label>
+            {sample.map((bm, i) =>
+              checkedItems.length === 1 && bm.id === checkedItems[0] ? (
+                <p key={`checked${i}`}>
+                  {bm.tags.map((tag, j) => (
+                    <input
+                      key={`checkedTag${j}`}
+                      name="tag"
+                      value={tag}
+                      onChange={tagInputHandler}
+                    />
+                  ))}
+                </p>
               ) : null
-            )
-          )}
-        </ul>
-      </div>
+            )}
+            {checkedItems.length > 1 ? <input type="text" name="tags" /> : null}
+            <button>수정하기</button>
+          </div>
+        </section>
+        <section>
+          {sample.map((bm, i) => (
+            <div key={`checkbox${i}`}>
+              <input id={bm.id} type="checkbox" onChange={checkHandler} />
+              <span>이름 : {bm.name}</span>
+              <span>태그 : {bm.tags.map((tag) => `# ${tag} `)}</span>
+            </div>
+          ))}
+        </section>
+      </form>
     </div>
   );
 }

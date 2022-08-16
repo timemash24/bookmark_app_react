@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import Bookmark from '../components/Bookmark';
 
 const DB_NAME = 'BookmarkDB';
 const OS_NAME = 'bookmarks';
@@ -6,10 +8,28 @@ const OS_NAME = 'bookmarks';
 function Home() {
   const [DBstate, setDBstate] = useState(false);
 
-  const bookmarks = [
-    { id: 1, name: 'bm1', url: 'www.blah.com', tag: ['tag1', 'tag2', 'tag3'] },
-    { id: 2, name: 'bm2', url: 'www.ddd.com', tag: ['tag3', 'tag4'] },
-    { id: 3, name: 'bm3', url: 'www.baaa.com', tag: ['tag1'] },
+  const sample = [
+    {
+      id: 1,
+      name: 'bm1',
+      url: 'https://www.blah.com',
+      tags: ['tag1', 'tag2', 'tag3'],
+      visit: 0,
+    },
+    {
+      id: 2,
+      name: 'bm2',
+      url: 'https://www.ddd.com',
+      tags: ['tag3', 'tag4'],
+      visit: 0,
+    },
+    {
+      id: 3,
+      name: 'bm3',
+      url: 'https://www.baaa.com',
+      tags: ['tag1'],
+      visit: 0,
+    },
   ];
 
   // 1. indexedDB 객체 가져오기
@@ -26,9 +46,6 @@ function Home() {
       const objectStore = db.createObjectStore(OS_NAME, {
         keyPath: 'id',
       }); // 4. name저장소 만들고, key는 id로 지정
-      //   objectStore.createIndex('name', 'name', { unique: false });
-      //   objectStore.createIndex('url', 'url', { unique: false });
-      //   objectStore.createIndex('tag', 'tag', { unique: false });
 
       request.onerror = (e) => alert('failed');
       request.onsuccess = (e) => (db = request.result); // 5. 성공시 db에 result를 저장
@@ -99,18 +116,27 @@ function Home() {
 
   const test = (e) => {
     e.preventDefault();
-    writeDB(bookmarks);
+    writeDB(sample);
   };
 
   return (
     <div>
       <h1>Home</h1>
       <div>
-        {DBstate ? <h2>Data Exists</h2> : <button>Add your bookmarks !</button>}
+        {DBstate ? (
+          <h2>Data Exists</h2>
+        ) : (
+          <Link to={'/edit'}>
+            <button>Go to Edit page</button>
+          </Link>
+        )}
       </div>
-      <div>
+
+      <Bookmark />
+
+      <section>
         <button onClick={test}>Add data</button>
-      </div>
+      </section>
     </div>
   );
 }
