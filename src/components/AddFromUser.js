@@ -118,7 +118,7 @@ function AddFromUser() {
           </div>
         ))}
       </section>
-      <button onClick={onClick}>모두 추가하기</button>
+      <button onClick={onClick}>저장✨</button>
     </div>
   );
 }
