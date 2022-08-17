@@ -1,12 +1,15 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import * as IndxdDBController from './IndxdDBController';
 
 const FOLDER_NAME_REGEX = /\"\>.*\<\/H3\>/g;
 const BOOKMARK_NAME_REGEX = /\>.*\<\/A\>/g;
 const URL_REGEX = /https?:\/\/[\w\-\.]+/g;
 
 function AddFromFile() {
+  const navigate = useNavigate();
   const [fileResult, setFileResult] = useState('');
-  const [newBookmarkList, setNewBookmarkList] = useState([]);
+  const [newBookmarks, setNewBookmarks] = useState([]);
 
   const getTextInTag = (text) => {
     const result = text.substring(text.indexOf('>') + 1, text.indexOf('<'));
@@ -22,33 +25,37 @@ function AddFromFile() {
 
     for (const dl of dlArr) {
       const tmpFolder = dl.match(FOLDER_NAME_REGEX);
-      let info = [];
 
       if (tmpFolder) {
         const folderName = getTextInTag(tmpFolder[0]);
-        info.push(folderName);
 
         // 폴더 내 북마크 목록 구하기
         const dtArr = dl.split('<DT>');
         for (const dt of dtArr) {
           const tmpName = dt.match(BOOKMARK_NAME_REGEX);
+          const id = Math.floor(Date.now() / Math.random());
           if (tmpName) {
             // 북마크 이름
             const name = getTextInTag(tmpName[0]);
-            // console.log(name);
 
             // 북마크 주소
+            if (!dt.match(URL_REGEX)) continue;
             const url = dt.match(URL_REGEX)[0];
-            // console.log(url);
 
-            info.push([name, url]);
+            let info = {
+              id: id,
+              name: name,
+              url: url,
+              tags: [folderName],
+              visit: 0,
+            };
+
+            bookmarksByFolder.push(info);
           }
         }
-
-        bookmarksByFolder.push(info);
       }
     }
-    setNewBookmarkList(bookmarksByFolder);
+    setNewBookmarks(bookmarksByFolder);
   };
 
   const onChange = (e) => {
@@ -65,9 +72,9 @@ function AddFromFile() {
     getBookmarkInfo(fileResult);
   };
 
-  const onClick = (e) => {
-    e.preventDefault();
-    console.log(newBookmarkList);
+  const onClick = () => {
+    IndxdDBController.writeDB(newBookmarks);
+    navigate('/');
   };
 
   return (
@@ -75,25 +82,23 @@ function AddFromFile() {
       <form onSubmit={onSubmit}>
         <label>북마크 html 파일을 선택하세요</label>
         <input type="file" accept=".html" onChange={onChange} />
-        <input type="submit" value="추가✨" />
+        <input type="submit" value="추가하기" />
       </form>
-      <button onClick={onClick}>테스트</button>
       <div>
-        {newBookmarkList.map((folder, i) => (
-          <h3 key={`folder${i}`}>{folder[0]}</h3>
-        ))}
+        <button onClick={onClick}>저장✨</button>
         <ul>
-          {newBookmarkList.map((folder) =>
-            folder.map((bookmark, i) =>
-              i !== 0 ? (
-                <li key={`newBookmark${i}`}>
-                  <a href={bookmark[1]} key={`newBookmarkI${i}`}>
-                    {bookmark[0]}
-                  </a>
-                </li>
-              ) : null
-            )
-          )}
+          {newBookmarks.map((bookmark, i) => (
+            <li key={i}>
+              <span>이름:{bookmark.name}</span>
+              <span>url:{bookmark.url}</span>
+              <span>
+                태그:
+                {bookmark.tags.map((tag, j) => (
+                  <span key={`${i}${j}`}>#{tag}</span>
+                ))}
+              </span>
+            </li>
+          ))}
         </ul>
       </div>
     </div>
