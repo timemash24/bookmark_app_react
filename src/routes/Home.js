@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Navbar from '../components/Navbar';
 import Bookmark from '../components/Bookmark';
 
 const DB_NAME = 'BookmarkDB';
@@ -121,6 +122,7 @@ function Home() {
 
   return (
     <div>
+      <Navbar />
       <h1>Home</h1>
       <div>
         {DBstate ? (

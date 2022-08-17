@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import FileUploader from '../components/FileUploader';
+import Navbar from '../components/Navbar';
 
 function Edit() {
   const sample = [
@@ -67,10 +67,7 @@ function Edit() {
   console.log(checkedItems);
   return (
     <div>
-      <span>
-        <Link to="/">메인으로</Link>
-      </span>
-
+      <Navbar />
       <form>
         <section>
           <p>
