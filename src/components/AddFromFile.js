@@ -4,7 +4,7 @@ import * as IndxdDBController from './IndxdDBController';
 
 const FOLDER_NAME_REGEX = /\"\>.*\<\/H3\>/g;
 const BOOKMARK_NAME_REGEX = /\>.*\<\/A\>/g;
-const URL_REGEX = /https?:\/\/[\w\-\.]+/g;
+const URL_REGEX = /https?:\/\/.*\"/;
 
 function AddFromFile() {
   const navigate = useNavigate();
@@ -40,7 +40,8 @@ function AddFromFile() {
 
             // 북마크 주소
             if (!dt.match(URL_REGEX)) continue;
-            const url = dt.match(URL_REGEX)[0];
+            const tmpUrl = dt.match(URL_REGEX)[0].replace(/"/g, ' ');
+            const url = tmpUrl.split(' ')[0];
 
             let info = {
               id: id,
