@@ -22,7 +22,7 @@ else {
 
 // db에 데이터 저장
 export function writeDB(bookmarks) {
-  console.log(bookmarks);
+  // console.log(bookmarks);
   const request = window.indexedDB.open(DB_NAME);
   request.onerror = (e) => {
     alert('DataBase error', e.target.errorCode);
@@ -77,4 +77,38 @@ export function getAllDBValues() {
   };
   // console.log(result);
   return result;
+}
+
+// 데이터 수정
+export function updateDBValue(info, key, value) {
+  const request = window.indexedDB.open(DB_NAME); // 1. db 열기
+  request.onerror = (e) => console.log(e.target.errorCode);
+
+  request.onsuccess = (e) => {
+    const db = request.result;
+    const transaction = db.transaction(OS_NAME, 'readwrite');
+    transaction.onerror = (e) => console.log('fail');
+    transaction.oncomplete = (e) => console.log('success');
+
+    const objStore = transaction.objectStore(OS_NAME); // 2. name 저장소 접근
+    const objStoreRequest = objStore.get(key); // 3. key값으로 데이터 접근
+    objStoreRequest.onsuccess = (e) => {
+      const data = objStoreRequest.result;
+      switch (info) {
+        case 'visit':
+          data.visit += 1;
+          break;
+        case 'name':
+          data.name = value;
+          break;
+        case 'tags':
+          data.tags = value;
+          break;
+      }
+
+      const updateRequest = objStore.put(data); // 4. 수정
+      updateRequest.onerror = (e) => console.log('udpate error');
+      updateRequest.onsuccess = (e) => console.log('success');
+    };
+  };
 }

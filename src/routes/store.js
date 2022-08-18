@@ -1,7 +1,7 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit';
 
 const bookmarks = createSlice({
-  name: 'bookmarksReducer',
+  name: 'bookmarks',
   initialState: [],
   reducers: {
     addBookmarks: (state, action) => {
@@ -15,7 +15,7 @@ const bookmarks = createSlice({
       //   // info: action.payload,
       // });
       console.log(action.payload);
-      action.payload.forEach((i) => state.push(i));
+      state.push(...action.payload);
     },
     removeBookmark: (state, action) => {
       state.filter((bookmark) => bookmark.id !== action.payload);

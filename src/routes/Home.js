@@ -1,34 +1,46 @@
 import { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux/es/exports';
+import { addBookmarks } from '../routes/store';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import SortedBookmarks from '../components/SortedBookmarks';
 import * as IndxdDBController from '../components/IndxdDBController';
 
-const DB_NAME = 'BookmarkDB';
-const OS_NAME = 'bookmarks';
 const tmp = IndxdDBController.getAllDBValues();
 
-function Home() {
+function Home({ bookmarks, addBookmarks }) {
   const [list, setList] = useState([]);
-  const main = useRef();
 
+  const onClick = (e) => {
+    e.preventDefault();
+    setList(tmp);
+  };
+
+  const test = (e) => {
+    e.preventDefault();
+    addBookmarks(list);
+  };
+
+  console.log(bookmarks);
   return (
-    <div ref={main}>
+    <div>
       <Navbar />
-      <SortedBookmarks tags={['웹개발']} data={tmp} />
+      <button onClick={onClick}>ALL</button>
+      <SortedBookmarks tags={['웹개발']} data={list} />
+      <button onClick={test}>store test</button>
     </div>
   );
 }
 
-// function mapStateToProps(state) {
-//   return {bookmarks:state}
-// }
+function mapStateToProps(state) {
+  return { bookmarks: state };
+}
 
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     addBookmark: ()
-//   }
-// }
-// export default connect(mapStateToProps)(mapDispatchToProps)(Home);
-export default Home;
+function mapDispatchToProps(dispatch) {
+  return {
+    addBookmarks: (tmp) => dispatch(addBookmarks(tmp)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
+// export default Home;
