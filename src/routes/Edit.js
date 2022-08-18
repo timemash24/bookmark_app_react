@@ -24,22 +24,6 @@ function Edit() {
   const [checkedItems, setCheckedItems] = useState([]);
   const [itemName, setItemName] = useState('');
   const [itemTag, setItemTag] = useState('');
-  const [bChecked, setChecked] = useState(false);
-
-  const checkedItemHandler = (target) => {
-    const id = parseInt(target.id);
-
-    if (checkedItems.includes(id)) {
-      if (checkedItems.length > 1)
-        setItemName(sample.find((bm) => bm.id === checkedItems[0]).name);
-      else setItemName('');
-      setCheckedItems(checkedItems.filter((itemId) => itemId !== id));
-    } else {
-      console.log('add id');
-      setCheckedItems([...checkedItems, id]);
-      setItemName(sample.find((bm) => bm.id === id).name);
-    }
-  };
 
   const checkHandler = ({ target }) => {
     const id = parseInt(target.id);
