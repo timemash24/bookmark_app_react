@@ -51,6 +51,7 @@ export function writeDB(bookmarks) {
 
 // db의 모든 데이터 조회
 export function getAllDBValues() {
+  const result = [];
   const request = window.indexedDB.open(DB_NAME); // 1. DB 열기
   request.onerror = (e) => console.log(e.target.errorCode);
 
@@ -64,17 +65,16 @@ export function getAllDBValues() {
     const cursorRequest = objStore.openCursor();
     cursorRequest.onsuccess = (e) => {
       let cursor = e.target.result;
-      console.log(cursor);
       if (cursor) {
         const value = objStore.get(cursor.key); // 3. 커서를 사용해 데이터 접근
         value.onsuccess = (e) => {
-          console.log(e.target.result);
+          // console.log(e.target.result);
+          result.push(e.target.result);
         };
         cursor.continue(); // 4. cursor로 순회
-      } else {
-        console.log('⚠ No Data in DB ⚠');
-        return;
       }
     };
   };
+  // console.log(result);
+  return result;
 }
