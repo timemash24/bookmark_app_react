@@ -1,26 +1,10 @@
 import { useState } from 'react';
+import { connect } from 'react-redux/es/exports';
+import { addBookmarks } from '../routes/store';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 
-function Edit() {
-  const sample = [
-    {
-      id: 1,
-      name: 'bm1',
-      url: 'https://google.com/',
-      tags: ['tag1', 'tag2', 'tag3'],
-      visit: 0,
-    },
-    {
-      id: 2,
-      name: 'bm2',
-      url: 'https://naver.com/',
-      tags: ['tag3', 'tag4'],
-      visit: 0,
-    },
-    { id: 3, name: 'bm3', url: 'https://aaaa.com/', tags: ['tag1'], visit: 0 },
-  ];
-
+function Edit({ bookmarks }) {
   const [checkedItems, setCheckedItems] = useState([]);
   const [itemName, setItemName] = useState('');
   const [itemTag, setItemTag] = useState('');
@@ -30,13 +14,13 @@ function Edit() {
 
     if (checkedItems.includes(id)) {
       if (checkedItems.length > 1)
-        setItemName(sample.find((bm) => bm.id === checkedItems[0]).name);
+        setItemName(bookmarks.find((bm) => bm.id === checkedItems[0]).name);
       else setItemName('');
       setCheckedItems(checkedItems.filter((itemId) => itemId !== id));
     } else {
       console.log('add id');
       setCheckedItems([...checkedItems, id]);
-      setItemName(sample.find((bm) => bm.id === id).name);
+      setItemName(bookmarks.find((bm) => bm.id === id).name);
     }
   };
 
@@ -49,6 +33,7 @@ function Edit() {
   };
 
   console.log(checkedItems);
+  console.log(bookmarks);
   return (
     <div>
       <Navbar />
@@ -68,7 +53,7 @@ function Edit() {
           </p>
           <div>
             <label htmlFor="tags">태그</label>
-            {sample.map((bm, i) =>
+            {bookmarks.map((bm, i) =>
               checkedItems.length === 1 && bm.id === checkedItems[0] ? (
                 <p key={`checked${i}`}>
                   {bm.tags.map((tag, j) => (
@@ -87,7 +72,7 @@ function Edit() {
           </div>
         </section>
         <section>
-          {sample.map((bm, i) => (
+          {bookmarks.map((bm, i) => (
             <div key={`checkbox${i}`}>
               <input id={bm.id} type="checkbox" onChange={checkHandler} />
               <span>이름 : {bm.name}</span>
@@ -100,4 +85,8 @@ function Edit() {
   );
 }
 
-export default Edit;
+function mapStateToProps(state) {
+  return { bookmarks: state };
+}
+
+export default connect(mapStateToProps)(Edit);
