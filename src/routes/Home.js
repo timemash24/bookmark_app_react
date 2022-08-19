@@ -64,7 +64,6 @@ function Home({ bookmarks, addBookmarks }) {
         </button>
       ))}
       <SortedBookmarks tags={tagSorts} data={list} />
-      {/* <button onClick={test}>store test</button> */}
     </div>
   );
 }
@@ -80,4 +79,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
-// export default Home;
