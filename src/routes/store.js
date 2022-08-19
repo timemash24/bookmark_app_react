@@ -5,15 +5,6 @@ const bookmarks = createSlice({
   initialState: [],
   reducers: {
     addBookmarks: (state, action) => {
-      // const { id, name, url, tags, visit } = action.payload;
-      // state.push({
-      //   id,
-      //   name,
-      //   url,
-      //   tags,
-      //   visit,
-      //   // info: action.payload,
-      // });
       console.log(action.payload);
       // state.push(...action.payload);
       return [...action.payload];

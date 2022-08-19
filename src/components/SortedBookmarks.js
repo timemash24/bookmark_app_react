@@ -18,12 +18,21 @@ function SortedBookmarks({ tags, data }) {
       setSelectedList([...data]);
     } else {
       const set = new Set();
-      for (const tag of tags) {
-        for (const bookmark of data) {
-          if (bookmark.tags.includes(tag)) set.add(bookmark);
-        }
+      const result = [];
+
+      for (const bookmark of data) {
+        const bmTags = [...bookmark.tags];
+        const selectedTags = [...tags];
+        if (bmTags.sort().join() === selectedTags.sort().join())
+          result.push(bookmark);
       }
-      setSelectedList([...set]);
+      setSelectedList(result);
+      // for (const tag of tags) {
+      //   for (const bookmark of data) {
+      //     if (bookmark.tags.includes(tag)) set.add(bookmark);
+      //   }
+      // }
+      // setSelectedList([...set]);
     }
   };
 

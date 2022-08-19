@@ -6,9 +6,8 @@ import Navbar from '../components/Navbar';
 import SortedBookmarks from '../components/SortedBookmarks';
 import * as IndxdDBController from '../components/IndxdDBController';
 
-const data = IndxdDBController.getAllDBValues();
-
 function Home({ bookmarks, addBookmarks }) {
+  const data = IndxdDBController.getAllDBValues();
   const [list, setList] = useState([]);
   const [tags, setTags] = useState([]);
   const [tagSorts, setTagSorts] = useState([]);
