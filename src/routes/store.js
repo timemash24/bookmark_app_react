@@ -16,6 +16,7 @@ const bookmarks = createSlice({
       // });
       console.log(action.payload);
       state.push(...action.payload);
+      // return [...action.payload];
     },
     removeBookmark: (state, action) => {
       state.filter((bookmark) => bookmark.id !== action.payload);
