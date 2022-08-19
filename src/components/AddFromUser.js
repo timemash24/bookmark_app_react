@@ -1,18 +1,28 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faSquarePlus,
-  faSquareMinus,
   faCheckSquare,
+  faTrashCan,
 } from '@fortawesome/free-regular-svg-icons';
 import * as IndxdDBController from './IndxdDBController';
 
+const URL_REGEX = /https?:\/\/.+\..+/;
+
 function AddFromUser() {
+  const navigate = useNavigate();
   const [nextId, setNextId] = useState(1);
   const [tagInputs, setTagInputs] = useState([{ id: 0, name: '' }]);
   const [newBookmarks, setNewBookmarks] = useState([]);
+  const [validURL, setValidURL] = useState(true);
 
-  const addTag = (e) => {
+  const checkValidURL = (e) => {
+    if (URL_REGEX.test(e.target.value)) setValidURL(true);
+    else setValidURL(false);
+  };
+
+  const addTagBtn = (e) => {
     e.preventDefault();
     const input = {
       id: nextId,
@@ -23,12 +33,12 @@ function AddFromUser() {
     setNextId(nextId + 1);
   };
 
-  const removeTag = (e, index) => {
+  const removeTagBtn = (e, id) => {
     e.preventDefault();
-    setTagInputs(tagInputs.filter((tag) => tag.id !== index));
+    setTagInputs(tagInputs.filter((tag) => tag.id !== id));
   };
 
-  const handleTagBtn = (e, index) => {
+  const handleTagInput = (e, index) => {
     e.preventDefault();
     const tagInputsCopy = tagInputs.slice();
     tagInputsCopy[index].name = e.target.value;
@@ -37,6 +47,7 @@ function AddFromUser() {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    if (!validURL) return;
     const target = e.target;
     const len = target.length;
     const tags = [];
@@ -59,54 +70,63 @@ function AddFromUser() {
     setTagInputs([{ id: 0, name: '' }]);
   };
 
-  const onClick = () => {
+  const removeBookmarkBtn = (e, id) => {
+    e.preventDefault();
+    setNewBookmarks(newBookmarks.filter((bookmark) => bookmark.id !== id));
+  };
+
+  const handleSaveBtn = () => {
     // 북마크 db에 저장
     console.log(newBookmarks);
-    IndxdDBController.writeDB(newBookmarks);
-    setNewBookmarks([]);
+    if (newBookmarks.length) {
+      IndxdDBController.writeDB(newBookmarks);
+      setNewBookmarks([]);
+      navigate('/');
+    }
   };
 
   return (
     <div>
       <section>
         <form onSubmit={onSubmit}>
-          <span>
+          <div>
             <label>이름 : </label>
             <input type="text" />
-          </span>
-          <span>
-            <label>url : </label>
-            <input type="text" />
-          </span>
+          </div>
           <div>
+            <label>url : </label>
+            <input type="text" onChange={checkValidURL} />
+            {validURL ? null : <span>⚠ not valid url ⚠</span>}
+          </div>
+          <ul>
             {tagInputs.map((input, index) => (
-              <p key={index}>
+              <li key={index}>
                 <label>태그{index + 1} : </label>
                 <input
                   type="text"
-                  onChange={(e) => handleTagBtn(e, index)}
+                  onChange={(e) => handleTagInput(e, index)}
                   value={input.name}
                 />
                 {index === 0 ? (
-                  <button onClick={addTag}>
+                  <button onClick={addTagBtn}>
                     <FontAwesomeIcon icon={faSquarePlus} />
                   </button>
                 ) : (
-                  <button onClick={(e) => removeTag(e, input.id)}>
-                    <FontAwesomeIcon icon={faSquareMinus} />
+                  <button onClick={(e) => removeTagBtn(e, input.id)}>
+                    <FontAwesomeIcon icon={faTrashCan} />
                   </button>
                 )}
-              </p>
+              </li>
             ))}
-          </div>
+          </ul>
           <button>
             <FontAwesomeIcon icon={faCheckSquare} />
           </button>
         </form>
       </section>
-      <section>
+      <ul>
         {newBookmarks.map((newBm, i) => (
-          <div key={`new${i}`}>
+          <li key={`new${i}`}>
             <span>이름: {newBm.name}</span>
             <span>url: {newBm.url}</span>
             <span>
@@ -115,10 +135,13 @@ function AddFromUser() {
                 <span key={`${i}${j}`}>{tag}</span>
               ))}
             </span>
-          </div>
+            <button onClick={(e) => removeBookmarkBtn(e, newBm.id)}>
+              <FontAwesomeIcon icon={faTrashCan} />
+            </button>
+          </li>
         ))}
-      </section>
-      <button onClick={onClick}>저장✨</button>
+      </ul>
+      <button onClick={handleSaveBtn}>저장✨</button>
     </div>
   );
 }
