@@ -6,12 +6,31 @@ import { addBookmarks } from '../routes/store';
 function SortedBookmarks({ tags, data }) {
   const [loading, setLoading] = useState(true);
   const [obj, setObj] = useState({});
-  const [list, setList] = useState([]);
+  const [selectedList, setSelectedList] = useState([]);
 
   // const onClick = (e) => {
   //   e.preventDefault();
   //   setList(data);
   // };
+  console.log(tags);
+  const getSelectedList = () => {
+    if (tags.includes('all')) {
+      setSelectedList([...data]);
+    } else {
+      const set = new Set();
+      for (const tag of tags) {
+        for (const bookmark of data) {
+          if (bookmark.tags.includes(tag)) set.add(bookmark);
+        }
+      }
+      setSelectedList([...set]);
+    }
+  };
+
+  useEffect(() => {
+    console.log(tags, data);
+    getSelectedList();
+  }, [tags]);
 
   const increaseVisit = (e) => {
     IndxdDBController.updateDBValue('visit', parseInt(e.target.id), 0);
@@ -19,7 +38,7 @@ function SortedBookmarks({ tags, data }) {
 
   return (
     <section>
-      {data.map((item, i) => (
+      {selectedList.map((item, i) => (
         <div key={i}>
           <a
             href={item.url}
@@ -34,17 +53,5 @@ function SortedBookmarks({ tags, data }) {
     </section>
   );
 }
-
-// function mapStateToProps(state) {
-//   return { bookmarks: state };
-// }
-
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     add: (list) => dispatch(addBookmarks(list)),
-//   };
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(SortedBookmarks);
 
 export default SortedBookmarks;

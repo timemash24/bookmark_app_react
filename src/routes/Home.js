@@ -11,7 +11,7 @@ const data = IndxdDBController.getAllDBValues();
 function Home({ bookmarks, addBookmarks }) {
   const [list, setList] = useState([]);
   const [tags, setTags] = useState([]);
-  const [tagSorts, setTagSorts] = useState(new Set());
+  const [tagSorts, setTagSorts] = useState([]);
 
   const onClick = (e) => {
     e.preventDefault();
@@ -40,6 +40,19 @@ function Home({ bookmarks, addBookmarks }) {
       item.tags.forEach((tag) => set.add(tag));
     });
     setTags([...set]);
+    setTagSorts(['all']);
+  };
+
+  const tagBtnHandler = (e) => {
+    let newTagSorts = tagSorts;
+    if (tagSorts.includes('all')) newTagSorts = [];
+    const tagName = e.target.innerText;
+    if (!newTagSorts.includes(tagName)) {
+      setTagSorts([...newTagSorts, tagName]);
+    } else {
+      const result = newTagSorts.filter((tag) => tag !== tagName);
+      setTagSorts(result);
+    }
   };
 
   return (
@@ -47,9 +60,11 @@ function Home({ bookmarks, addBookmarks }) {
       <Navbar />
       <button onClick={onClick}>ALL</button>
       {tags.map((tag, i) => (
-        <button key={i}>{tag}</button>
+        <button key={i} onClick={tagBtnHandler}>
+          {tag}
+        </button>
       ))}
-      <SortedBookmarks tags={['웹개발']} data={list} />
+      <SortedBookmarks tags={tagSorts} data={list} />
       {/* <button onClick={test}>store test</button> */}
     </div>
   );
