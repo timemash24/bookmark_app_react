@@ -75,6 +75,7 @@ export function getAllDBValues() {
       }
     };
   };
+
   // console.log(result);
   return result;
 }

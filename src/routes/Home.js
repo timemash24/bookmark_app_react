@@ -13,12 +13,26 @@ function Home({ bookmarks, addBookmarks }) {
 
   const onClick = (e) => {
     e.preventDefault();
-    setList(tmp);
+
+    // visit 많은 순 - 사전순으로 정렬
+    const sorted = tmp.sort((a, b) => {
+      // return b.visit - a.visit;
+      if (a.visit < b.visit) return 1;
+      else if (a.visit > b.visit) return -1;
+      else {
+        if (a.name > b.name) return 1;
+        else return -1;
+      }
+    });
+    setList(sorted);
   };
+
+  useEffect(() => {
+    if (!bookmarks.length) addBookmarks(list);
+  }, [list]);
 
   const test = (e) => {
     e.preventDefault();
-    addBookmarks(list);
   };
 
   console.log(bookmarks);
@@ -26,8 +40,8 @@ function Home({ bookmarks, addBookmarks }) {
     <div>
       <Navbar />
       <button onClick={onClick}>ALL</button>
-      <SortedBookmarks tags={['웹개발']} data={list} />
-      <button onClick={test}>store test</button>
+      <SortedBookmarks tags={['웹개발']} data={bookmarks} />
+      {/* <button onClick={test}>store test</button> */}
     </div>
   );
 }
