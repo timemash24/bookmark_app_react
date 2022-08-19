@@ -6,16 +6,18 @@ import Navbar from '../components/Navbar';
 import SortedBookmarks from '../components/SortedBookmarks';
 import * as IndxdDBController from '../components/IndxdDBController';
 
-const tmp = IndxdDBController.getAllDBValues();
+const data = IndxdDBController.getAllDBValues();
 
 function Home({ bookmarks, addBookmarks }) {
   const [list, setList] = useState([]);
+  const [tags, setTags] = useState([]);
+  const [tagSorts, setTagSorts] = useState(new Set());
 
   const onClick = (e) => {
     e.preventDefault();
 
     // visit 많은 순 - 사전순으로 정렬
-    const sorted = tmp.sort((a, b) => {
+    const sorted = data.sort((a, b) => {
       // return b.visit - a.visit;
       if (a.visit < b.visit) return 1;
       else if (a.visit > b.visit) return -1;
@@ -25,22 +27,29 @@ function Home({ bookmarks, addBookmarks }) {
       }
     });
     setList(sorted);
+    getTags(sorted);
   };
 
   useEffect(() => {
-    if (!bookmarks.length) addBookmarks(list);
+    addBookmarks(list);
   }, [list]);
 
-  const test = (e) => {
-    e.preventDefault();
+  const getTags = (list) => {
+    const set = new Set();
+    list.forEach((item) => {
+      item.tags.forEach((tag) => set.add(tag));
+    });
+    setTags([...set]);
   };
 
-  console.log(bookmarks);
   return (
     <div>
       <Navbar />
       <button onClick={onClick}>ALL</button>
-      <SortedBookmarks tags={['웹개발']} data={bookmarks} />
+      {tags.map((tag, i) => (
+        <button key={i}>{tag}</button>
+      ))}
+      <SortedBookmarks tags={['웹개발']} data={list} />
       {/* <button onClick={test}>store test</button> */}
     </div>
   );
@@ -52,7 +61,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addBookmarks: (tmp) => dispatch(addBookmarks(tmp)),
+    addBookmarks: (data) => dispatch(addBookmarks(data)),
   };
 }
 
