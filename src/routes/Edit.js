@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
+import { faSquarePlus, faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { connect } from 'react-redux/es/exports';
 import { addBookmarks } from '../routes/store';
 import { Link } from 'react-router-dom';
@@ -10,6 +10,7 @@ import * as IndxdDBController from '../components/IndxdDBController';
 
 function Edit({ bookmarks }) {
   const navigate = useNavigate();
+  const [nextId, setNextId] = useState(1);
   const [list, setList] = useState([]);
   const [checkedIds, setCheckedIds] = useState([]);
   const [itemName, setItemName] = useState('');
@@ -18,32 +19,44 @@ function Edit({ bookmarks }) {
   const [validTag, setValidTag] = useState(true);
 
   useEffect(() => {
-    console.log(bookmarks);
     setList(bookmarks);
   }, [list]);
 
-  const handleCheckbox = ({ target }) => {
-    const id = parseInt(target.id);
+  const addTagBtn = (e) => {
+    e.preventDefault();
+    console.log(itemTags);
+    setItemTags([...itemTags, '']);
+    setNextId(nextId + 1);
+  };
+
+  const removeTagBtn = (e, index) => {
+    e.preventDefault();
+    setItemTags(itemTags.filter((_, i) => i !== index));
+  };
+
+  const handleCheckbox = (e) => {
+    const id = parseInt(e.target.id);
 
     if (checkedIds.includes(id)) {
-      if (checkedIds.length > 1)
-        setItemName(bookmarks.find((bm) => bm.id === checkedIds[0]).name);
-      else setItemName('');
-      setCheckedIds(checkedIds.filter((itemId) => itemId !== id));
+      const checked = checkedIds.filter((itemId) => itemId !== id);
+      if (checked.length === 1) {
+        setItemName(bookmarks.find((bm) => bm.id === checked[0]).name);
+        setItemTags(bookmarks.find((bm) => bm.id === checked[0]).tags);
+      }
+      setCheckedIds(checked);
     } else {
-      console.log('add id');
       setCheckedIds([...checkedIds, id]);
       setItemName(bookmarks.find((bm) => bm.id === id).name);
       setItemTags(bookmarks.find((bm) => bm.id === id).tags);
     }
   };
 
-  const handleNameInput = ({ target }) => {
-    setItemName(target.value);
+  const handleNameInput = (e) => {
+    if (checkedIds.length < 1) setItemName(e.target.value);
   };
 
   const handleTagInput = (e, index) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
 
     const tags = [...itemTags];
     const newTags = tags.map((tag, i) => {
@@ -71,7 +84,7 @@ function Edit({ bookmarks }) {
     IndxdDBController.updateDBValue('tags', id, itemTags);
   };
 
-  const addTags = (ids, newTag) => {
+  const addTagsToSelected = (ids, newTag) => {
     for (const id of ids) {
       let newTags = [];
       for (const bm of list) {
@@ -85,7 +98,7 @@ function Edit({ bookmarks }) {
     }
   };
 
-  const handleSavebtn = (e) => {
+  const handleSaveBtn = (e) => {
     e.preventDefault();
     if (!validTag) return;
 
@@ -97,12 +110,8 @@ function Edit({ bookmarks }) {
 
     // 태그 일괄 추가
     else {
-      console.log(tagToAdd);
-      addTags(checkedIds, tagToAdd);
-      // checkedIds.forEach((id) => {
-
-      //   IndxdDBController.updateDBValue('tags', id, itemTags);
-      // })
+      // console.log(tagToAdd);
+      addTagsToSelected(checkedIds, tagToAdd);
       navigate('/');
     }
   };
@@ -125,23 +134,29 @@ function Edit({ bookmarks }) {
             </div>
           ) : null}
           <div>
-            {bookmarks.map((bm, i) =>
-              checkedIds.length === 1 && bm.id === checkedIds[0] ? (
-                <div key={`checked${i}`}>
-                  {bm.tags.map((_, j) => (
-                    <p>
-                      <label htmlFor="tag">태그</label>
-                      <input
-                        key={`checkedTag${j}`}
-                        name="tag"
-                        value={itemTags[j]}
-                        onChange={(e) => handleTagInput(e, j)}
-                      />
-                    </p>
-                  ))}
-                </div>
-              ) : null
-            )}
+            {checkedIds.length === 1 ? (
+              <ul>
+                {itemTags.map((_, index) => (
+                  <li key={`checkedTag${index}`}>
+                    <label htmlFor="tag">태그{index + 1}</label>
+                    <input
+                      name="tag"
+                      value={itemTags[index]}
+                      onChange={(e) => handleTagInput(e, index)}
+                    />
+                    {index === 0 ? (
+                      <button onClick={addTagBtn}>
+                        <FontAwesomeIcon icon={faSquarePlus} />
+                      </button>
+                    ) : (
+                      <button onClick={(e) => removeTagBtn(e, index)}>
+                        <FontAwesomeIcon icon={faTrashCan} />
+                      </button>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            ) : null}
             {validTag ? null : <p>⚠ need at least one tag ⚠</p>}
             {checkedIds.length > 1 ? (
               <p>
@@ -150,7 +165,7 @@ function Edit({ bookmarks }) {
               </p>
             ) : null}
             {checkedIds.length > 0 ? (
-              <button onClick={handleSavebtn}>변경사항 저장✨</button>
+              <button onClick={handleSaveBtn}>변경사항 저장✨</button>
             ) : null}
           </div>
         </section>
