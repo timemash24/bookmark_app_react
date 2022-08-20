@@ -99,7 +99,7 @@ export function updateDBValue(info, key, value) {
         case 'visit':
           data.visit += 1;
           break;
-        case 'name':
+        case OS_NAME:
           data.name = value;
           break;
         case 'tags':
@@ -110,6 +110,25 @@ export function updateDBValue(info, key, value) {
       const updateRequest = objStore.put(data); // 4. 수정
       updateRequest.onerror = (e) => console.log('udpate error');
       updateRequest.onsuccess = (e) => console.log('success');
+    };
+  };
+}
+
+// 특정 키 값 삭제
+export function deleteDBValue(key) {
+  const request = window.indexedDB.open(DB_NAME); // 1. db 열기
+  request.onerror = (e) => console.log(e.target.errorCode);
+
+  request.onsuccess = (e) => {
+    const db = request.result;
+    const transaction = db.transaction(OS_NAME, 'readwrite');
+    transaction.onerror = (e) => console.log('fail');
+    transaction.oncomplete = (e) => console.log('success');
+
+    const objStore = transaction.objectStore(OS_NAME); // 2. name 저장소 접근
+    const objStoreRequest = objStore.delete(key); // 3. 삭제하기
+    objStoreRequest.onsuccess = (e) => {
+      console.log('deleted');
     };
   };
 }
