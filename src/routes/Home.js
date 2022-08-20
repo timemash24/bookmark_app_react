@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux/es/exports';
+import { useNavigate } from 'react-router-dom';
 import { addBookmarks } from '../routes/store';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
@@ -8,13 +9,14 @@ import * as IndxdDBController from '../components/IndxdDBController';
 
 function Home({ bookmarks, addBookmarks }) {
   const data = IndxdDBController.getAllDBValues();
+  const navigate = useNavigate();
   const [list, setList] = useState([]);
   const [tags, setTags] = useState([]);
-  const [tagSorts, setTagSorts] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [tagToEdit, setTagtoEdit] = useState('');
+  const [editMode, setEditMode] = useState(false);
 
-  const onClick = (e) => {
-    e.preventDefault();
-
+  const init = (data) => {
     // visit 많은 순 - 사전순으로 정렬
     const sorted = data.sort((a, b) => {
       // return b.visit - a.visit;
@@ -27,43 +29,92 @@ function Home({ bookmarks, addBookmarks }) {
     });
     setList(sorted);
     getTags(sorted);
+    setEditMode(false);
+  };
+
+  const onClick = (e) => {
+    e.preventDefault();
+
+    init(data);
   };
 
   useEffect(() => {
     addBookmarks(list);
   }, [list]);
 
-  const getTags = (list) => {
+  const getTags = (data) => {
     const set = new Set();
-    list.forEach((item) => {
+    data.forEach((item) => {
       item.tags.forEach((tag) => set.add(tag));
     });
     setTags([...set]);
-    setTagSorts(['all']);
+    setSelectedTags(['all']);
+  };
+
+  const getTagToEdit = (e) => {
+    setTagtoEdit(e.target.value);
   };
 
   const tagBtnHandler = (e) => {
-    let newTagSorts = tagSorts;
-    if (tagSorts.includes('all')) newTagSorts = [];
     const tagName = e.target.innerText;
-    if (!newTagSorts.includes(tagName)) {
-      setTagSorts([...newTagSorts, tagName]);
+    if (editMode) {
+      setSelectedTags([tagName]);
+      setTagtoEdit(tagName);
     } else {
-      const result = newTagSorts.filter((tag) => tag !== tagName);
-      setTagSorts(result);
+      let newSelectedTags = selectedTags;
+      if (selectedTags.includes('all')) newSelectedTags = [];
+
+      if (!newSelectedTags.includes(tagName)) {
+        setSelectedTags([...newSelectedTags, tagName]);
+      } else {
+        const result = newSelectedTags.filter((tag) => tag !== tagName);
+        setSelectedTags(result);
+      }
     }
+  };
+  console.log(selectedTags);
+
+  const handleEditBtn = (e) => {
+    setEditMode(!editMode);
+    setSelectedTags([]);
+  };
+
+  const saveChangesBtn = (e) => {
+    // 선택한 태그 이름 수정
+    bookmarks.forEach((bookmark) => {
+      if (bookmark.tags.includes(selectedTags[0])) {
+        const newTags = bookmark.tags.filter((tag) => tag !== selectedTags[0]);
+        newTags.push(tagToEdit);
+        IndxdDBController.updateDBValue('tags', bookmark.id, newTags);
+      }
+    });
+    init(IndxdDBController.getAllDBValues());
+    navigate('/');
   };
 
   return (
     <div>
       <Navbar />
-      <button onClick={onClick}>ALL</button>
-      {tags.map((tag, i) => (
-        <button key={i} onClick={tagBtnHandler}>
-          {tag}
-        </button>
-      ))}
-      <SortedBookmarks tags={tagSorts} data={list} />
+      <section>
+        <button onClick={onClick}>ALL</button>
+        {tags.map((tag, i) => (
+          <button key={i} onClick={tagBtnHandler}>
+            {tag}
+          </button>
+        ))}
+      </section>
+      <section>
+        {list.length && !editMode ? (
+          <button onClick={handleEditBtn}>태그 이름 수정하기🖋</button>
+        ) : null}
+        {editMode ? (
+          <div>
+            <input type="text" value={tagToEdit} onChange={getTagToEdit} />
+            <button onClick={saveChangesBtn}>수정사항 저장✨</button>
+          </div>
+        ) : null}
+      </section>
+      <SortedBookmarks tags={selectedTags} data={list} />
     </div>
   );
 }
