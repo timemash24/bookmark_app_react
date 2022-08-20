@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquarePlus, faTrashCan } from '@fortawesome/free-regular-svg-icons';
+import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux/es/exports';
-import { addBookmarks } from '../routes/store';
+import { removeBookmark } from '../routes/store';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import * as IndxdDBController from '../components/IndxdDBController';
 
-function Edit({ bookmarks }) {
+function Edit({ bookmarks, removeBookmark }) {
+  const data = IndxdDBController.getAllDBValues();
   const navigate = useNavigate();
   const [nextId, setNextId] = useState(1);
   const [list, setList] = useState([]);
@@ -20,7 +22,21 @@ function Edit({ bookmarks }) {
 
   useEffect(() => {
     setList(bookmarks);
-  }, [list]);
+  }, []);
+
+  const onClick = () => {
+    // visit 많은 순 - 사전순으로 정렬
+    const sorted = data.sort((a, b) => {
+      // return b.visit - a.visit;
+      if (a.visit < b.visit) return 1;
+      else if (a.visit > b.visit) return -1;
+      else {
+        if (a.name > b.name) return 1;
+        else return -1;
+      }
+    });
+    setList(sorted);
+  };
 
   const addTagBtn = (e) => {
     e.preventDefault();
@@ -72,7 +88,13 @@ function Edit({ bookmarks }) {
 
   const removeBookmarkBtn = (e, id) => {
     e.preventDefault();
-    // setNewBookmarks(newBookmarks.filter((bookmark) => bookmark.id !== id));
+    if (window.confirm('삭제하시겠습니까?')) {
+      // setNewBookmarks(newBookmarks.filter((bookmark) => bookmark.id !== id));
+      IndxdDBController.deleteDBValue(id);
+      removeBookmark(id);
+      window.alert('삭제하였습니다');
+      navigate('/');
+    }
   };
 
   const handleNewTag = (e) => {
@@ -119,7 +141,10 @@ function Edit({ bookmarks }) {
   return (
     <div>
       <Navbar />
-      <form>
+      <main>
+        <div onClick={onClick}>
+          <FontAwesomeIcon icon={faArrowsRotate} />
+        </div>
         <section>
           {checkedIds.length === 1 ? (
             <div>
@@ -170,7 +195,7 @@ function Edit({ bookmarks }) {
           </div>
         </section>
         <ul>
-          {bookmarks.map((bm, i) => (
+          {list.map((bm, i) => (
             <li key={`checkbox${i}`}>
               <input
                 id={bm.id}
@@ -186,7 +211,7 @@ function Edit({ bookmarks }) {
             </li>
           ))}
         </ul>
-      </form>
+      </main>
     </div>
   );
 }
@@ -195,4 +220,10 @@ function mapStateToProps(state) {
   return { bookmarks: state };
 }
 
-export default connect(mapStateToProps)(Edit);
+function mapDispatchToProps(dispatch) {
+  return {
+    removeBookmark: (data) => dispatch(removeBookmark(data)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Edit);
