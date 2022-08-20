@@ -6,7 +6,6 @@ import { addBookmarks } from '../routes/store';
 function SortedBookmarks({ tags, data }) {
   const [selectedList, setSelectedList] = useState([]);
 
-  console.log(tags);
   const getSelectedList = () => {
     if (tags.includes('all')) {
       setSelectedList([...data]);
@@ -16,25 +15,30 @@ function SortedBookmarks({ tags, data }) {
 
       if (tags.length > 1) {
         for (const bookmark of data) {
-          const bmTags = [...bookmark.tags];
-          const selectedTags = [...tags];
-          if (bmTags.sort().join() === selectedTags.sort().join())
-            result.push(bookmark);
+          let include = false;
+          for (const tag of tags) {
+            if (bookmark.tags.includes(tag)) include = true;
+            else {
+              include = false;
+              break;
+            }
+          }
+          if (include) result.push(bookmark);
         }
         setSelectedList(result);
       } else {
         for (const tag of tags) {
           for (const bookmark of data) {
-            if (bookmark.tags.includes(tag)) set.add(bookmark);
+            if (bookmark.tags.includes(tag)) result.push(bookmark);
           }
         }
-        setSelectedList([...set]);
+        setSelectedList(result);
       }
     }
   };
 
   useEffect(() => {
-    console.log(tags, data);
+    // console.log(tags, data);
     getSelectedList();
   }, [tags]);
 
