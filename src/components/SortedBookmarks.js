@@ -4,14 +4,8 @@ import * as IndxdDBController from '../components/IndxdDBController';
 import { addBookmarks } from '../routes/store';
 
 function SortedBookmarks({ tags, data }) {
-  const [loading, setLoading] = useState(true);
-  const [obj, setObj] = useState({});
   const [selectedList, setSelectedList] = useState([]);
 
-  // const onClick = (e) => {
-  //   e.preventDefault();
-  //   setList(data);
-  // };
   console.log(tags);
   const getSelectedList = () => {
     if (tags.includes('all')) {
@@ -20,19 +14,22 @@ function SortedBookmarks({ tags, data }) {
       const set = new Set();
       const result = [];
 
-      for (const bookmark of data) {
-        const bmTags = [...bookmark.tags];
-        const selectedTags = [...tags];
-        if (bmTags.sort().join() === selectedTags.sort().join())
-          result.push(bookmark);
+      if (tags.length > 1) {
+        for (const bookmark of data) {
+          const bmTags = [...bookmark.tags];
+          const selectedTags = [...tags];
+          if (bmTags.sort().join() === selectedTags.sort().join())
+            result.push(bookmark);
+        }
+        setSelectedList(result);
+      } else {
+        for (const tag of tags) {
+          for (const bookmark of data) {
+            if (bookmark.tags.includes(tag)) set.add(bookmark);
+          }
+        }
+        setSelectedList([...set]);
       }
-      setSelectedList(result);
-      // for (const tag of tags) {
-      //   for (const bookmark of data) {
-      //     if (bookmark.tags.includes(tag)) set.add(bookmark);
-      //   }
-      // }
-      // setSelectedList([...set]);
     }
   };
 
