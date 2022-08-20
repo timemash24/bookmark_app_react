@@ -14,6 +14,7 @@ function Edit({ bookmarks }) {
   const [checkedIds, setCheckedIds] = useState([]);
   const [itemName, setItemName] = useState('');
   const [itemTags, setItemTags] = useState([]);
+  const [validTag, setValidTag] = useState(true);
 
   useEffect(() => {
     console.log(bookmarks);
@@ -48,6 +49,10 @@ function Edit({ bookmarks }) {
       if (i === index) return e.target.value;
       else return tag;
     });
+
+    if (newTags[0] === '') setValidTag(false);
+    else setValidTag(true);
+
     setItemTags(newTags);
   };
 
@@ -65,10 +70,10 @@ function Edit({ bookmarks }) {
     e.preventDefault();
 
     // 개별 변경
-    if (checkedIds.length === 1) {
+    if (checkedIds.length === 1 && validTag) {
       updateBookmark(checkedIds[0]);
+      navigate('/');
     }
-    navigate('/');
   };
 
   return (
@@ -104,6 +109,7 @@ function Edit({ bookmarks }) {
                 </p>
               ) : null
             )}
+            {validTag ? null : <p>⚠ need at least one tag ⚠</p>}
             {checkedIds.length > 1 ? <input type="text" name="tags" /> : null}
             <button onClick={handleSavebtn}>변경사항 저장✨</button>
           </div>
