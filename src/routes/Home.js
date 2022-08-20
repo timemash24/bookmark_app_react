@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import SortedBookmarks from '../components/SortedBookmarks';
 import * as IndxdDBController from '../components/IndxdDBController';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBookOpen } from '@fortawesome/free-solid-svg-icons';
 
 function Home({ bookmarks, addBookmarks }) {
   const data = IndxdDBController.getAllDBValues();
@@ -96,7 +98,9 @@ function Home({ bookmarks, addBookmarks }) {
     <div>
       <Navbar />
       <section>
-        <button onClick={onClick}>ALL</button>
+        <button onClick={onClick}>
+          <FontAwesomeIcon icon={faBookOpen} />
+        </button>
         {tags.map((tag, i) => (
           <button key={i} onClick={tagBtnHandler}>
             {tag}
