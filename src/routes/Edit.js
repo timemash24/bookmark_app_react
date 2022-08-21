@@ -195,7 +195,7 @@ function Edit({ bookmarks, addBookmarks, removeBookmark }) {
             ) : null}
             {checkedIds.length > 0 ? (
               <button className="save_changes_btn" onClick={handleSaveBtn}>
-                변경사항 저장✨
+                수정하기✨
               </button>
             ) : null}
           </div>

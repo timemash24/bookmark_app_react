@@ -83,7 +83,12 @@ function AddFromFile() {
     <div>
       <form className="file_input" onSubmit={onSubmit}>
         <label>북마크 html 파일을 선택하세요</label>
-        <input type="file" accept=".html" onChange={onChange} />
+        <input
+          className="file_btn"
+          type="file"
+          accept=".html"
+          onChange={onChange}
+        />
         <input type="submit" value="추가" />
       </form>
       <div>

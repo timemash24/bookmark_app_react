@@ -44,6 +44,13 @@
   background-color: var(--grey-color);
 }
 
+.file_btn::file-selector-button {
+  font-family: 'GmarketSansMedium';
+  font-size: 1.2rem;
+  text-align: center;
+  line-height: 2rem;
+  background-color: var(--grey-color);
+}
 .file_input,
 .user_inputs {
   display: flex;
