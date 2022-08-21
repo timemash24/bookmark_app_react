@@ -11,6 +11,12 @@ body {
   height: 100%;
   overflow-x: hidden;
 }
+body::-webkit-scrollbar {
+  width: 0.8rem;
+}
+body::-webkit-scrollbar-thumb {
+  background-color: var(--light-pink-color);
+}
 
 a {
   color: inherit;
