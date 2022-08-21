@@ -81,52 +81,60 @@ function AddFromUser() {
     if (newBookmarks.length) {
       IndxdDBController.writeDB(newBookmarks);
       setNewBookmarks([]);
+      window.alert('성공적으로 추가되었습니다✍');
       navigate('/');
     }
   };
 
   return (
     <div>
-      <section>
+      <section className="user_inputs">
         <form onSubmit={onSubmit}>
-          <div>
+          <div className="user_input">
             <label>이름 : </label>
             <input type="text" />
           </div>
-          <div>
-            <label>url : </label>
+          {validURL ? null : (
+            <span className="alert">⚠ 유효하지 않은 주소 형식 ⚠</span>
+          )}
+          <div className="user_input">
+            <label>URL : </label>
             <input type="text" onChange={checkValidURL} />
-            {validURL ? null : <span>⚠ not valid url ⚠</span>}
           </div>
-          <ul>
+
+          <ul className="tag_inputs">
             {tagInputs.map((input, index) => (
-              <li key={index}>
-                <label>태그{index + 1} : </label>
+              <li key={index} className="tag_input">
+                <label>태그 {index + 1} : </label>
                 <input
                   type="text"
                   onChange={(e) => handleTagInput(e, index)}
                   value={input.name}
                 />
                 {index === 0 ? (
-                  <button onClick={addTagBtn}>
+                  <button className="tag_btn" onClick={addTagBtn}>
                     <FontAwesomeIcon icon={faSquarePlus} />
                   </button>
                 ) : (
-                  <button onClick={(e) => removeTagBtn(e, input.id)}>
+                  <button
+                    className="tag_btn"
+                    onClick={(e) => removeTagBtn(e, input.id)}
+                  >
                     <FontAwesomeIcon icon={faTrashCan} />
                   </button>
                 )}
               </li>
             ))}
           </ul>
-          <button>
-            <FontAwesomeIcon icon={faCheckSquare} />
-          </button>
+          <button className="add_btn">추가</button>
         </form>
       </section>
-      <ul>
+      <button className="save_btn" onClick={handleSaveBtn}>
+        저장✨
+      </button>
+      <ul className="new_list">
         {newBookmarks.map((newBm, i) => (
-          <li key={`new${i}`}>
+          <li className="new_bookmark" key={`new${i}`}>
             <span>이름: {newBm.name}</span>
             <span>url: {newBm.url}</span>
             <span>
@@ -141,7 +149,6 @@ function AddFromUser() {
           </li>
         ))}
       </ul>
-      <button onClick={handleSaveBtn}>저장✨</button>
     </div>
   );
 }

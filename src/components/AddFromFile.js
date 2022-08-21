@@ -75,6 +75,7 @@ function AddFromFile() {
 
   const onClick = () => {
     IndxdDBController.writeDB(newBookmarks);
+    window.alert('성공적으로 추가되었습니다✍');
     navigate('/');
   };
 

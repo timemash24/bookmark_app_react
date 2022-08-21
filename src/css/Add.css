@@ -1,0 +1,127 @@
+.tag_inputs input,
+.user_input input {
+  width: 30rem;
+  height: 2rem;
+  font-size: 1.2rem;
+  border: var(--black-color) 5px;
+  border-radius: 3px;
+  padding-left: 0.5rem;
+  background-color: var(--grey-color);
+}
+
+.toggle {
+  padding: 2rem 0 0 2rem;
+}
+
+.selected {
+  background-color: var(--light-pink-color);
+}
+.default {
+  background-color: var(--yellow-color);
+}
+
+.selected,
+.default {
+  font-size: 1.2rem;
+  border-radius: 0.5rem 0.5rem 0 0;
+  text-align: center;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.main {
+  padding: 0 2rem;
+  color: var(--white-color);
+}
+
+.main label {
+  margin: 0 1rem 0;
+  font-size: 1.1rem;
+  text-align: center;
+  width: 5rem;
+  line-height: 2rem;
+}
+
+.user_inputs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--black-color);
+  padding: 3rem 2rem 2rem 2rem;
+}
+
+.user_input {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 1.2rem;
+  padding-left: 0;
+}
+
+.tag_inputs {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 0;
+  margin: 0;
+}
+
+.tag_input {
+  display: flex;
+  justify-content: center;
+  padding-top: 0.2rem;
+  margin-bottom: 1.2rem;
+}
+
+.tag_btn {
+  color: var(--grey-color);
+  font-size: 1.5rem;
+  border: none;
+  padding: 0 1rem;
+}
+
+.alert {
+  color: var(--yellow-color);
+  padding-left: 7rem;
+  font-family: 'GmarketSansLight';
+}
+.add_btn {
+  float: right;
+  padding: 0.5rem;
+  margin-top: 1rem;
+  text-align: center;
+  background-color: var(--yellow-color);
+  font-size: 1.2rem;
+}
+.save_btn {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  background-color: var(--yellow-color);
+  font-size: 1.4rem;
+}
+
+.new_list {
+  padding: 2rem 0;
+}
+.new_bookmark {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 0.2fr;
+  gap: 1rem;
+  background-color: var(--dark-purple-color);
+  font-size: 1.2rem;
+  padding: 0.5rem;
+}
+.new_bookmark button {
+  border: none;
+  border-radius: 2px;
+  padding: 0.2rem;
+  background-color: var(--yellow-color);
+  font-size: 1rem;
+  text-align: center;
+  margin-left: 1rem;
+}
+.new_bookmark span {
+  padding: 0.2rem;
+  text-align: center;
+  font-family: 'GmarketSansLight';
+}
