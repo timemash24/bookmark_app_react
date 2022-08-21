@@ -84,3 +84,9 @@
   padding: 0.5rem;
   align-self: flex-end;
 }
+
+.edit_alert {
+  color: var(--yellow-color);
+  align-self: center;
+  font-family: 'GmarketSansLight';
+}

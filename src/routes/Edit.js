@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquarePlus, faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux/es/exports';
-import { removeBookmark } from '../routes/store';
+import { addBookmarks, removeBookmark } from '../routes/store';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
@@ -11,7 +11,7 @@ import * as IndxdDBController from '../components/IndxdDBController';
 import '../css/Edit.css';
 const refreshIcon = require('../img/refresh_icon.PNG');
 
-function Edit({ bookmarks, removeBookmark }) {
+function Edit({ bookmarks, addBookmarks, removeBookmark }) {
   const data = IndxdDBController.getAllDBValues();
   const navigate = useNavigate();
   const [nextId, setNextId] = useState(1);
@@ -38,6 +38,7 @@ function Edit({ bookmarks, removeBookmark }) {
       }
     });
     setList(sorted);
+    addBookmarks(sorted);
   };
 
   const addTagBtn = (e) => {
@@ -91,7 +92,6 @@ function Edit({ bookmarks, removeBookmark }) {
   const removeBookmarkBtn = (e, id) => {
     e.preventDefault();
     if (window.confirm('⚠삭제하시겠습니까?⚠')) {
-      // setNewBookmarks(newBookmarks.filter((bookmark) => bookmark.id !== id));
       IndxdDBController.deleteDBValue(id);
       removeBookmark(id);
       window.alert('삭제하였습니다💨');
@@ -184,7 +184,9 @@ function Edit({ bookmarks, removeBookmark }) {
                 ))}
               </ul>
             ) : null}
-            {validTag ? null : <p>⚠ need at least one tag ⚠</p>}
+            {validTag ? null : (
+              <p className="edit_alert">⚠ 하나 이상의 태그가 필요합니다 ⚠</p>
+            )}
             {checkedIds.length > 1 ? (
               <p className="edit_tag">
                 <span>태그</span>
@@ -229,6 +231,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    addBookmarks: (data) => dispatch(addBookmarks(data)),
     removeBookmark: (data) => dispatch(removeBookmark(data)),
   };
 }
