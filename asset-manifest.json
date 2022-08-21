@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/bookmark_app_react/static/css/main.bb53af3d.css",
+    "main.js": "/bookmark_app_react/static/js/main.43aa2455.js",
+    "static/media/GmarketSansTTFMedium.ttf": "/bookmark_app_react/static/media/GmarketSansTTFMedium.d4bac6b182bed73c9375.ttf",
+    "static/media/GmarketSansTTFLight.ttf": "/bookmark_app_react/static/media/GmarketSansTTFLight.efaa8f19ead1555b1c39.ttf",
+    "static/media/edit_icon2.PNG": "/bookmark_app_react/static/media/edit_icon2.bbf2d7af78a2fbb2e6db.PNG",
+    "static/media/home_icon.PNG": "/bookmark_app_react/static/media/home_icon.1c873e36fc45e3447ab0.PNG",
+    "index.html": "/bookmark_app_react/index.html",
+    "static/media/add_icon.PNG": "/bookmark_app_react/static/media/add_icon.e6fa5093adeaf01bb1a0.PNG",
+    "static/media/refresh_icon.PNG": "/bookmark_app_react/static/media/refresh_icon.48bd4ffa46eb257cf20e.PNG",
+    "main.bb53af3d.css.map": "/bookmark_app_react/static/css/main.bb53af3d.css.map",
+    "main.43aa2455.js.map": "/bookmark_app_react/static/js/main.43aa2455.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.bb53af3d.css",
+    "static/js/main.43aa2455.js"
+  ]
+}
