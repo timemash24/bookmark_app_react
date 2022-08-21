@@ -81,16 +81,18 @@ function AddFromFile() {
 
   return (
     <div>
-      <form onSubmit={onSubmit}>
+      <form className="file_input" onSubmit={onSubmit}>
         <label>북마크 html 파일을 선택하세요</label>
         <input type="file" accept=".html" onChange={onChange} />
-        <input type="submit" value="추가하기" />
+        <input type="submit" value="추가" />
       </form>
       <div>
-        <button onClick={onClick}>저장✨</button>
-        <ul>
+        <button className="save_btn" onClick={onClick}>
+          저장✨
+        </button>
+        <ul className="new_list">
           {newBookmarks.map((bookmark, i) => (
-            <li key={i}>
+            <li className="new_bookmark" key={i}>
               <span>이름:{bookmark.name}</span>
               <span>url:{bookmark.url}</span>
               <span>

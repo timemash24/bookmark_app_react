@@ -1,14 +1,4 @@
-.tag_inputs input,
-.user_input input {
-  width: 30rem;
-  height: 2rem;
-  font-size: 1.2rem;
-  border: var(--black-color) 5px;
-  border-radius: 3px;
-  padding-left: 0.5rem;
-  background-color: var(--grey-color);
-}
-
+/* Add */
 .toggle {
   padding: 2rem 0 0 2rem;
 }
@@ -42,6 +32,19 @@
   line-height: 2rem;
 }
 
+/* AddFromUser */
+.tag_inputs input,
+.user_input input {
+  width: 30rem;
+  height: 2rem;
+  font-size: 1.2rem;
+  border: var(--black-color) 5px;
+  border-radius: 3px;
+  padding-left: 0.5rem;
+  background-color: var(--grey-color);
+}
+
+.file_input,
 .user_inputs {
   display: flex;
   flex-direction: column;
@@ -124,4 +127,19 @@
   padding: 0.2rem;
   text-align: center;
   font-family: 'GmarketSansLight';
+}
+
+/* AddFromFile */
+.file_input label {
+  width: 30rem;
+}
+.file_input input {
+  font-size: 1rem;
+  margin: 1rem 0;
+}
+
+.file_input input:last-child {
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  background-color: var(--yellow-color);
 }
