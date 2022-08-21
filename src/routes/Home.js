@@ -1,6 +1,6 @@
 import { faBookOpen, faPen } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useEffect, useState, useRef, createRef } from 'react';
+import { useEffect, useState } from 'react';
 import { connect } from 'react-redux/es/exports';
 import { useNavigate } from 'react-router-dom';
 import * as IndxdDBController from '../components/IndxdDBController';
@@ -17,7 +17,6 @@ function Home({ bookmarks, addBookmarks }) {
   const [selectedTags, setSelectedTags] = useState([]);
   const [tagToEdit, setTagtoEdit] = useState('');
   const [editMode, setEditMode] = useState(false);
-  const tagRefs = Array.from({ length: tags.length }).map(() => createRef());
 
   const init = (data) => {
     // visit 많은 순 - 사전순으로 정렬
@@ -71,10 +70,9 @@ function Home({ bookmarks, addBookmarks }) {
 
       if (!newSelectedTags.includes(tagName)) {
         setSelectedTags([...newSelectedTags, tagName]);
-        console.log(e);
-        e.target.className = 'tag_selected';
+        // e.target.className = 'tag_selected';
       } else {
-        e.target.className = 'tag_excluded';
+        // e.target.className = 'tag_excluded';
         const result = newSelectedTags.filter((tag) => tag !== tagName);
         setSelectedTags(result);
       }
@@ -108,16 +106,17 @@ function Home({ bookmarks, addBookmarks }) {
           <button onClick={onClick}>
             <FontAwesomeIcon icon={faBookOpen} />
           </button>
-          {tags.map((tag, i) => (
-            <button
-              className="tag_excluded"
-              key={i}
-              onClick={tagBtnHandler}
-              ref={tagRefs[i]}
-            >
-              {tag}
-            </button>
-          ))}
+          {tags.map((tag, i) =>
+            selectedTags.includes(tag) ? (
+              <button className="tag_selected" key={i} onClick={tagBtnHandler}>
+                {tag}
+              </button>
+            ) : (
+              <button className="tag_excluded" key={i} onClick={tagBtnHandler}>
+                {tag}
+              </button>
+            )
+          )}
         </section>
         <section className="tag_edit">
           {list.length && !editMode ? (
