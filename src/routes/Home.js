@@ -94,6 +94,8 @@ function Home({ bookmarks, addBookmarks }) {
         IndxdDBController.updateDBValue('tags', bookmark.id, newTags);
       }
     });
+    setTagtoEdit('');
+    window.alert('수정이 완료되었습니다😊');
     init(IndxdDBController.getAllDBValues());
     navigate('/');
   };
