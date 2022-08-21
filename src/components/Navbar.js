@@ -6,28 +6,29 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
+const homeIcon = require('../img/home_icon.PNG');
+const addIcon = require('../img/add_icon.PNG');
+const editIcon = require('../img/edit_icon2.PNG');
 
 function Navbar() {
   return (
     <section className="navbar">
       <div className="home">
         <Link to="/">
-          <span>
-            <FontAwesomeIcon icon={faBookBookmark} />
-          </span>
+          <img src={homeIcon} alt="home" />
         </Link>
       </div>
       <div className="menu">
-        <Link to="/add">
-          <span>
-            <FontAwesomeIcon icon={faPlus} />
-          </span>
-        </Link>
-        <Link to="/edit">
-          <span>
-            <FontAwesomeIcon icon={faPenToSquare} />
-          </span>
-        </Link>
+        <span>
+          <Link to="/add">
+            <img src={addIcon} alt="add" />
+          </Link>
+        </span>
+        <span>
+          <Link to="/edit">
+            <img src={editIcon} alt="edit" />
+          </Link>
+        </span>
       </div>
     </section>
   );

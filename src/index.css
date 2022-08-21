@@ -1,0 +1,17 @@
+@font-face {
+  font-family: 'GmarketSansLight';
+  src: url('../src/fonts/GmarketSansTTFLight.ttf');
+}
+
+@font-face {
+  font-family: 'GmarketSansMedium';
+  src: url('../src/fonts/GmarketSansTTFMedium.ttf');
+}
+
+:root {
+  /* Color */
+  --black-color: #100720;
+  --purple-color: #31087b;
+  --pink-color: #fa2fb5;
+  --yellow-color: #ffc23c;
+}

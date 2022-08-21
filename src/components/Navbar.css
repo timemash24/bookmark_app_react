@@ -3,23 +3,21 @@ body {
 }
 .navbar {
   display: flex;
-  width: 100%;
   padding: 1rem 2rem;
   justify-content: space-between;
   align-items: center;
-  background-color: paleturquoise;
+  background-color: var(--black-color);
 }
-.home {
-  font-size: 3rem;
+
+.home,
+.munu {
+  cursor: pointer;
 }
-.menu {
-  font-size: 2.5rem;
-  margin-right: 2rem;
+
+.navbar img {
+  padding: 0.3rem;
 }
+
 .menu span {
-  margin-right: 2rem;
-}
-.navbar span {
-  color: hotpink;
-  text-decoration: none;
+  margin-left: 3rem;
 }
