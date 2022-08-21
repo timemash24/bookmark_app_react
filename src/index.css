@@ -12,6 +12,8 @@
   /* Color */
   --black-color: #100720;
   --purple-color: #31087b;
+  --dark-purple-color: rgb(35, 15, 68);
+  --grey-color: #c9d6df;
   --pink-color: #fa2fb5;
   --yellow-color: #ffc23c;
 }

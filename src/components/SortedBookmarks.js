@@ -47,9 +47,9 @@ function SortedBookmarks({ tags, data }) {
   };
 
   return (
-    <section>
+    <ul className="bookmark_list">
       {selectedList.map((item, i) => (
-        <div key={i}>
+        <li className="bookmark" key={i}>
           <a
             href={item.url}
             target="_blank"
@@ -58,9 +58,9 @@ function SortedBookmarks({ tags, data }) {
           >
             {item.name}
           </a>
-        </div>
+        </li>
       ))}
-    </section>
+    </ul>
   );
 }
 

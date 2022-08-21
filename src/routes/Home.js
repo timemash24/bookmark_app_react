@@ -1,13 +1,13 @@
-import { useEffect, useRef, useState } from 'react';
+import { faBookOpen, faPen } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useEffect, useState } from 'react';
 import { connect } from 'react-redux/es/exports';
 import { useNavigate } from 'react-router-dom';
-import { addBookmarks } from '../routes/store';
-import { Link } from 'react-router-dom';
+import * as IndxdDBController from '../components/IndxdDBController';
 import Navbar from '../components/Navbar';
 import SortedBookmarks from '../components/SortedBookmarks';
-import * as IndxdDBController from '../components/IndxdDBController';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBookOpen } from '@fortawesome/free-solid-svg-icons';
+import { addBookmarks } from '../routes/store';
+import '../css/Home.css';
 
 function Home({ bookmarks, addBookmarks }) {
   const data = IndxdDBController.getAllDBValues();
@@ -17,6 +17,7 @@ function Home({ bookmarks, addBookmarks }) {
   const [selectedTags, setSelectedTags] = useState([]);
   const [tagToEdit, setTagtoEdit] = useState('');
   const [editMode, setEditMode] = useState(false);
+  const [selected, setSelected] = useState(false);
 
   const init = (data) => {
     // visit 많은 순 - 사전순으로 정렬
@@ -97,28 +98,36 @@ function Home({ bookmarks, addBookmarks }) {
   return (
     <div>
       <Navbar />
-      <section>
-        <button onClick={onClick}>
-          <FontAwesomeIcon icon={faBookOpen} />
-        </button>
-        {tags.map((tag, i) => (
-          <button key={i} onClick={tagBtnHandler}>
-            {tag}
+      <main className="main">
+        <section className="tags">
+          <button onClick={onClick}>
+            <FontAwesomeIcon icon={faBookOpen} />
           </button>
-        ))}
-      </section>
-      <section>
-        {list.length && !editMode ? (
-          <button onClick={handleEditBtn}>태그 이름 수정하기🖋</button>
-        ) : null}
-        {editMode ? (
-          <div>
-            <input type="text" value={tagToEdit} onChange={getTagToEdit} />
-            <button onClick={saveChangesBtn}>수정사항 저장✨</button>
-          </div>
-        ) : null}
-      </section>
-      <SortedBookmarks tags={selectedTags} data={list} />
+          {tags.map((tag, i) => (
+            <button key={i} onClick={tagBtnHandler}>
+              {tag}
+            </button>
+          ))}
+        </section>
+        <section className="tag_edit">
+          {list.length && !editMode ? (
+            <button onClick={handleEditBtn}>
+              <FontAwesomeIcon icon={faPen} />
+              <span>태그 이름 수정하기</span>
+              <FontAwesomeIcon icon={faPen} />
+            </button>
+          ) : null}
+          {editMode ? (
+            <div>
+              <input type="text" value={tagToEdit} onChange={getTagToEdit} />
+              <button onClick={saveChangesBtn}>
+                <span>수정사항 저장✨</span>
+              </button>
+            </div>
+          ) : null}
+        </section>
+        <SortedBookmarks tags={selectedTags} data={list} />
+      </main>
     </div>
   );
 }
