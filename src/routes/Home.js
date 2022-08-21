@@ -111,11 +111,11 @@ function Home({ bookmarks, addBookmarks }) {
           {tags.map((tag, i) =>
             selectedTags.includes(tag) ? (
               <button className="tag_selected" key={i} onClick={tagBtnHandler}>
-                {tag}
+                # {tag}
               </button>
             ) : (
               <button className="tag_excluded" key={i} onClick={tagBtnHandler}>
-                {tag}
+                # {tag}
               </button>
             )
           )}

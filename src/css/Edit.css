@@ -1,0 +1,86 @@
+.edit {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  color: var(--grey-color);
+  font-size: 1.2rem;
+}
+
+.edit_inputs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--black-color);
+  padding: 3rem 2rem 2rem 2rem;
+  margin: 1rem;
+}
+
+.edit_inputs input {
+  width: 30rem;
+  height: 2rem;
+  border: var(--black-color) 5px;
+  border-radius: 3px;
+  padding-left: 0.5rem;
+  font-size: 1.2rem;
+  background-color: var(--grey-color);
+}
+.name_input {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 1rem;
+}
+.edit_tag span,
+.name_input label {
+  width: 5rem;
+  padding: 0 1rem;
+  text-align: center;
+  line-height: 2rem;
+}
+
+.edit_tag_inputs {
+  display: flex;
+  flex-direction: column;
+}
+.edit_tag_list {
+  padding-left: 2.5rem;
+}
+.edit_tag {
+  display: flex;
+  justify-content: center;
+  padding-top: 0.2rem;
+  margin-bottom: 1.2rem;
+}
+
+.edit_tag button {
+  font-size: 1.2rem;
+  color: var(--white-color);
+  margin-left: 0.5rem;
+}
+
+.checkbox_list {
+  display: grid;
+  /* grid-template-columns: 1fr 1fr 1fr 0.2fr; */
+  gap: 0.5rem;
+  padding: 2rem;
+}
+.checkbox {
+  display: grid;
+  grid-template-columns: 20px 2fr 1fr 40px;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: var(--dark-purple-color);
+}
+
+.delete_btn {
+  font-size: 1.2rem;
+  height: 40px;
+  background-color: var(--yellow-color);
+  padding: 0.2rem;
+}
+
+.save_changes_btn {
+  font-size: 1.2rem;
+  background-color: var(--yellow-color);
+  padding: 0.5rem;
+  align-self: flex-end;
+}

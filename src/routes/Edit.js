@@ -8,6 +8,8 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import * as IndxdDBController from '../components/IndxdDBController';
+import '../css/Edit.css';
+const refreshIcon = require('../img/refresh_icon.PNG');
 
 function Edit({ bookmarks, removeBookmark }) {
   const data = IndxdDBController.getAllDBValues();
@@ -88,11 +90,11 @@ function Edit({ bookmarks, removeBookmark }) {
 
   const removeBookmarkBtn = (e, id) => {
     e.preventDefault();
-    if (window.confirm('삭제하시겠습니까?')) {
+    if (window.confirm('⚠삭제하시겠습니까?⚠')) {
       // setNewBookmarks(newBookmarks.filter((bookmark) => bookmark.id !== id));
       IndxdDBController.deleteDBValue(id);
       removeBookmark(id);
-      window.alert('삭제하였습니다');
+      window.alert('삭제하였습니다💨');
       navigate('/');
     }
   };
@@ -141,13 +143,13 @@ function Edit({ bookmarks, removeBookmark }) {
   return (
     <div>
       <Navbar />
-      <main>
+      <main className="edit">
         <div onClick={onClick}>
-          <FontAwesomeIcon icon={faArrowsRotate} />
+          <img src={refreshIcon} alt="refresh" />
         </div>
-        <section>
+        <section className="edit_inputs">
           {checkedIds.length === 1 ? (
-            <div>
+            <div className="name_input">
               <label htmlFor="name">이름</label>
               <input
                 type="text"
@@ -158,12 +160,12 @@ function Edit({ bookmarks, removeBookmark }) {
               />
             </div>
           ) : null}
-          <div>
+          <div className="edit_tag_inputs">
             {checkedIds.length === 1 ? (
-              <ul>
+              <ul className="edit_tag_list">
                 {itemTags.map((_, index) => (
-                  <li key={`checkedTag${index}`}>
-                    <label htmlFor="tag">태그{index + 1}</label>
+                  <li className="edit_tag" key={`checkedTag${index}`}>
+                    <span>태그{index + 1}</span>
                     <input
                       name="tag"
                       value={itemTags[index]}
@@ -184,19 +186,21 @@ function Edit({ bookmarks, removeBookmark }) {
             ) : null}
             {validTag ? null : <p>⚠ need at least one tag ⚠</p>}
             {checkedIds.length > 1 ? (
-              <p>
-                <label htmlFor="newTag">태그</label>
+              <p className="edit_tag">
+                <span>태그</span>
                 <input type="text" name="newTag" onChange={handleNewTag} />
               </p>
             ) : null}
             {checkedIds.length > 0 ? (
-              <button onClick={handleSaveBtn}>변경사항 저장✨</button>
+              <button className="save_changes_btn" onClick={handleSaveBtn}>
+                변경사항 저장✨
+              </button>
             ) : null}
           </div>
         </section>
-        <ul>
+        <ul className="checkbox_list">
           {list.map((bm, i) => (
-            <li key={`checkbox${i}`}>
+            <li className="checkbox" key={`checkbox${i}`}>
               <input
                 id={bm.id}
                 type="checkbox"
@@ -204,8 +208,11 @@ function Edit({ bookmarks, removeBookmark }) {
                 onChange={handleCheckbox}
               />
               <span>이름 : {bm.name}</span>
-              <span>태그 : {bm.tags.map((tag) => `# ${tag} `)}</span>
-              <button onClick={(e) => removeBookmarkBtn(e, bm.id)}>
+              <span>{bm.tags.map((tag) => `# ${tag} `)}</span>
+              <button
+                className="delete_btn"
+                onClick={(e) => removeBookmarkBtn(e, bm.id)}
+              >
                 <FontAwesomeIcon icon={faTrashCan} />
               </button>
             </li>
