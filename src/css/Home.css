@@ -5,7 +5,6 @@ body {
   padding: 1rem;
 }
 .tags button {
-  background-color: var(--yellow-color);
   font-size: 1.2rem;
   border-radius: 0.5rem;
   text-align: center;
@@ -13,8 +12,16 @@ body {
   margin: 0.15rem;
   cursor: pointer;
 }
+.tags button:first-child {
+  background-color: var(--yellow-color);
+}
+.tag_excluded {
+  background-color: var(--yellow-color);
+}
 .tag_selected {
   background-color: var(--pink-color);
+  color: var(--white-color);
+  /* background-color: var(--light-pink-color); */
 }
 .tags {
   display: flex;

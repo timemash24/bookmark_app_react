@@ -1,6 +1,6 @@
 import { faBookOpen, faPen } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, createRef } from 'react';
 import { connect } from 'react-redux/es/exports';
 import { useNavigate } from 'react-router-dom';
 import * as IndxdDBController from '../components/IndxdDBController';
@@ -17,7 +17,7 @@ function Home({ bookmarks, addBookmarks }) {
   const [selectedTags, setSelectedTags] = useState([]);
   const [tagToEdit, setTagtoEdit] = useState('');
   const [editMode, setEditMode] = useState(false);
-  const [selected, setSelected] = useState(false);
+  const tagRefs = Array.from({ length: tags.length }).map(() => createRef());
 
   const init = (data) => {
     // visit 많은 순 - 사전순으로 정렬
@@ -36,8 +36,8 @@ function Home({ bookmarks, addBookmarks }) {
   };
 
   const onClick = (e) => {
-    e.preventDefault();
-
+    // e.preventDefault();
+    console.log(e);
     init(data);
   };
 
@@ -65,11 +65,16 @@ function Home({ bookmarks, addBookmarks }) {
       setTagtoEdit(tagName);
     } else {
       let newSelectedTags = selectedTags;
-      if (selectedTags.includes('all')) newSelectedTags = [];
+      if (selectedTags.includes('all')) {
+        newSelectedTags = [];
+      }
 
       if (!newSelectedTags.includes(tagName)) {
         setSelectedTags([...newSelectedTags, tagName]);
+        console.log(e);
+        e.target.className = 'tag_selected';
       } else {
+        e.target.className = 'tag_excluded';
         const result = newSelectedTags.filter((tag) => tag !== tagName);
         setSelectedTags(result);
       }
@@ -104,7 +109,12 @@ function Home({ bookmarks, addBookmarks }) {
             <FontAwesomeIcon icon={faBookOpen} />
           </button>
           {tags.map((tag, i) => (
-            <button key={i} onClick={tagBtnHandler}>
+            <button
+              className="tag_excluded"
+              key={i}
+              onClick={tagBtnHandler}
+              ref={tagRefs[i]}
+            >
               {tag}
             </button>
           ))}
