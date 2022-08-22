@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
-import { connect } from 'react-redux/es/exports';
 import * as IndxdDBController from '../components/IndxdDBController';
-import { addBookmarks } from '../routes/store';
 
 function SortedBookmarks({ tags, data }) {
   const [selectedList, setSelectedList] = useState([]);

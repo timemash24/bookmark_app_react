@@ -35,8 +35,6 @@ function Home({ bookmarks, addBookmarks }) {
   };
 
   const onClick = (e) => {
-    // e.preventDefault();
-    console.log(e);
     init(data);
   };
 
@@ -70,15 +68,12 @@ function Home({ bookmarks, addBookmarks }) {
 
       if (!newSelectedTags.includes(tagName)) {
         setSelectedTags([...newSelectedTags, tagName]);
-        // e.target.className = 'tag_selected';
       } else {
-        // e.target.className = 'tag_excluded';
         const result = newSelectedTags.filter((tag) => tag !== tagName);
         setSelectedTags(result);
       }
     }
   };
-  console.log(selectedTags);
 
   const handleEditBtn = (e) => {
     setEditMode(!editMode);

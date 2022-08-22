@@ -1,14 +1,12 @@
-import { useEffect, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquarePlus, faTrashCan } from '@fortawesome/free-regular-svg-icons';
-import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useEffect, useState } from 'react';
 import { connect } from 'react-redux/es/exports';
-import { addBookmarks, removeBookmark } from '../routes/store';
-import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../components/Navbar';
 import * as IndxdDBController from '../components/IndxdDBController';
+import Navbar from '../components/Navbar';
 import '../css/Edit.css';
+import { addBookmarks, removeBookmark } from '../routes/store';
 const refreshIcon = require('../img/refresh_icon.PNG');
 
 function Edit({ bookmarks, addBookmarks, removeBookmark }) {
@@ -43,7 +41,7 @@ function Edit({ bookmarks, addBookmarks, removeBookmark }) {
 
   const addTagBtn = (e) => {
     e.preventDefault();
-    console.log(itemTags);
+    // console.log(itemTags);
     setItemTags([...itemTags, '']);
     setNextId(nextId + 1);
   };
