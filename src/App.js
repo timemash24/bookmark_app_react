@@ -5,7 +5,7 @@ import Edit from './routes/Edit';
 
 function App() {
   return (
-    <Router basename={process.env.PUBLIC_URL}>
+    <Router>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/add" element={<Add />} />
