@@ -99,7 +99,7 @@ export function updateDBValue(info, key, value) {
         case 'visit':
           data.visit += 1;
           break;
-        case OS_NAME:
+        case 'name':
           data.name = value;
           break;
         case 'tags':

@@ -71,7 +71,7 @@ function Edit({ bookmarks, addBookmarks, removeBookmark }) {
   };
 
   const handleNameInput = (e) => {
-    if (checkedIds.length < 1) setItemName(e.target.value);
+    setItemName(e.target.value);
   };
 
   const handleTagInput = (e, index) => {
@@ -129,6 +129,7 @@ function Edit({ bookmarks, addBookmarks, removeBookmark }) {
     // 개별 변경
     if (checkedIds.length === 1) {
       updateBookmark(checkedIds[0]);
+      window.alert('성공적으로 수정되었습니다✍');
       navigate('/');
     }
 
@@ -136,6 +137,7 @@ function Edit({ bookmarks, addBookmarks, removeBookmark }) {
     else {
       // console.log(tagToAdd);
       addTagsToSelected(checkedIds, tagToAdd);
+      window.alert('성공적으로 수정되었습니다✍');
       navigate('/');
     }
   };
