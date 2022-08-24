@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as IndxdDBController from './IndxdDBController';
+import { testFile } from './testFile';
 
 const FOLDER_NAME_REGEX = /\"\>.*\<\/H3\>/g;
 const BOOKMARK_NAME_REGEX = /\>.*\<\/A\>/g;
@@ -74,14 +75,31 @@ function AddFromFile() {
   };
 
   const onClick = () => {
+    if (!newBookmarks.length) return;
     IndxdDBController.writeDB(newBookmarks);
     window.alert('성공적으로 추가되었습니다✍');
     navigate('/');
   };
 
+  const exportTextFile = useCallback(() => {
+    let fileName = 'bookmarks_test.html';
+    let output = testFile;
+    const element = document.createElement('a');
+    const file = new Blob([output], {
+      type: 'text/plain',
+    });
+    element.href = URL.createObjectURL(file);
+    element.download = fileName;
+    document.body.appendChild(element); // FireFox
+    element.click();
+  }, []);
+
   return (
     <div>
       <form className="file_input" onSubmit={onSubmit}>
+        <button className="testing" onClick={exportTextFile}>
+          [ 테스트용 HTML 파일 다운받기 ]
+        </button>
         <label>북마크 html 파일을 선택하세요</label>
         <input
           className="file_btn"
@@ -89,8 +107,19 @@ function AddFromFile() {
           accept=".html"
           onChange={onChange}
         />
+        <div className="file_instruction">
+          <p>⭐ Chrome에서 북마크를 HTML 파일로 가져오는 법 ⭐</p>
+          <p>1. Chrome을 엽니다.</p>
+          <p>2. 오른쪽 상단에서 더보기를 클릭합니다.</p>
+          <p>3. 북마크 - 북마크 관리자를 선택합니다.</p>
+          <p>4. 상단에서 더보기 - 북마크 내보내기를 클릭합니다.</p>
+        </div>
         <input type="submit" value="추가" />
       </form>
+      {/* <button className="testing" onClick={exportTextFile}>
+        [ 테스트용 HTML 파일 다운받기 ]
+      </button> */}
+
       <div>
         <button className="save_btn" onClick={onClick}>
           저장✨
