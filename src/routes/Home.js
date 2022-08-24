@@ -14,6 +14,7 @@ function Home({ bookmarks, addBookmarks }) {
   const navigate = useNavigate();
   const [list, setList] = useState([]);
   const [tags, setTags] = useState([]);
+  const [empty, setEmpty] = useState(false);
   const [selectedTags, setSelectedTags] = useState([]);
   const [tagToEdit, setTagtoEdit] = useState('');
   const [editMode, setEditMode] = useState(false);
@@ -36,6 +37,7 @@ function Home({ bookmarks, addBookmarks }) {
 
   const onClick = (e) => {
     init(data);
+    if (!data.length) setEmpty(true);
   };
 
   useEffect(() => {
@@ -103,6 +105,9 @@ function Home({ bookmarks, addBookmarks }) {
           <button onClick={onClick}>
             <FontAwesomeIcon icon={faBookOpen} />
           </button>
+          {empty ? (
+            <div className="empty">북마크를 추가해 주세요 📚</div>
+          ) : null}
           {tags.map((tag, i) =>
             selectedTags.includes(tag) ? (
               <button className="tag_selected" key={i} onClick={tagBtnHandler}>
