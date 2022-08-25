@@ -19,8 +19,8 @@ React.js, Javascript, Redux, HTML, CSS
 
 ## 기능 설명
 - 브라우저 재시작 시에도 저장된 북마크 불러오기
-  -IndexedDB에 북마크 이름, url, 태그, 방문 횟수 저장하여 사용 
-  -IndexedDB는 DOM 이벤트 리스너로 요청을 할 수 있기 때문에 더 원활한 활용을 위해 redux 사용으로 bookmark 정보를 state으로 활용
+  - IndexedDB에 북마크 이름, url, 태그, 방문 횟수 저장하여 사용 
+  - IndexedDB는 DOM 이벤트 리스너로 요청을 할 수 있기 때문에 더 원활한 활용을 위해 redux 사용으로 bookmark 정보를 state으로 활용
 
 - 선택한 태그를 모두 포함하는 북마크 표시
   - 추가한 북마크 목록에 존재하는 모든 태그 목록 표시
