@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/bookmark_app_react/static/css/main.e3456ba2.css",
-    "main.js": "/bookmark_app_react/static/js/main.ac25d843.js",
+    "main.js": "/bookmark_app_react/static/js/main.308130f2.js",
     "static/media/GmarketSansTTFMedium.ttf": "/bookmark_app_react/static/media/GmarketSansTTFMedium.d4bac6b182bed73c9375.ttf",
     "static/media/GmarketSansTTFLight.ttf": "/bookmark_app_react/static/media/GmarketSansTTFLight.efaa8f19ead1555b1c39.ttf",
     "static/media/edit_icon2.PNG": "/bookmark_app_react/static/media/edit_icon2.bbf2d7af78a2fbb2e6db.PNG",
@@ -10,10 +10,10 @@
     "static/media/add_icon.PNG": "/bookmark_app_react/static/media/add_icon.e6fa5093adeaf01bb1a0.PNG",
     "static/media/refresh_icon.PNG": "/bookmark_app_react/static/media/refresh_icon.48bd4ffa46eb257cf20e.PNG",
     "main.e3456ba2.css.map": "/bookmark_app_react/static/css/main.e3456ba2.css.map",
-    "main.ac25d843.js.map": "/bookmark_app_react/static/js/main.ac25d843.js.map"
+    "main.308130f2.js.map": "/bookmark_app_react/static/js/main.308130f2.js.map"
   },
   "entrypoints": [
     "static/css/main.e3456ba2.css",
-    "static/js/main.ac25d843.js"
+    "static/js/main.308130f2.js"
   ]
 }
