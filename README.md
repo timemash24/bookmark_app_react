@@ -5,10 +5,14 @@ Demo Site 🔗 https://timemash24.github.io/bookmark_app_react/
 ## 사용 스택
 React.js, Javascript, Redux, HTML, CSS
 
+
+
 > 크롬의 북마크바는 폴더식으로 구분되어 특정 북마크를 찾는데 조금 불편했다.
 점점 불어나는 북마크 목록에서 찾고 싶은 북마크를 쉽게 찾고 싶어서 제작하게 되었다.
 폴더 안에 수많은 북마크 목록을 살펴보고 폴더 속의 폴더 속의 북마크를 힘들게 찾지 않고
 북마크에 원하는 태그를 여러개 붙여서 선택한 태그별로 북마크를 볼 수 있다.
+
+
 
 ![bookmark_app_page](https://user-images.githubusercontent.com/56548122/185840504-c105f9a9-611e-40c4-aba8-c1a8dc0013dd.PNG)
 ![image](https://user-images.githubusercontent.com/56548122/186594448-f41d07f8-d8c6-4058-bd96-c0bf0bd4196e.png)
