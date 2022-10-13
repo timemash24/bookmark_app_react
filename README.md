@@ -1,6 +1,9 @@
 # Bookmark App 
 태그를 이용하여 정리된 북마크 목록을 보여주는 앱 🏷
 
+## 사용 스택
+React.js, Javascript, Redux, HTML, CSS
+
 > 크롬의 북마크바는 폴더식으로 구분되어 특정 북마크를 찾는데 조금 불편했다.
 점점 불어나는 북마크 목록에서 찾고 싶은 북마크를 쉽게 찾고 싶어서 제작하게 되었다.
 폴더 안에 수많은 북마크 목록을 살펴보고 폴더 속의 폴더 속의 북마크를 힘들게 찾지 않고
@@ -12,10 +15,6 @@ Demo Site 🔗 https://timemash24.github.io/bookmark_app_react/
 ![image](https://user-images.githubusercontent.com/56548122/186594448-f41d07f8-d8c6-4058-bd96-c0bf0bd4196e.png)
 ![image](https://user-images.githubusercontent.com/56548122/186594517-01585fde-2702-44e1-99ae-b38a5f02cd20.png)
 ![image](https://user-images.githubusercontent.com/56548122/186597236-eca4d8e6-e10b-45fc-8411-ef9e4831cd76.png)
-
-
-## 사용 스택
-React.js, Javascript, Redux, HTML, CSS
 
 ## 기능 설명
 - 브라우저 재시작 시에도 저장된 북마크 불러오기
