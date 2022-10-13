@@ -1,5 +1,5 @@
 # Bookmark App 
-태그를 이용하여 정리된 북마크 목록을 보여주는 앱 🏷
+태그를 이용하여 정리된 북마크 목록을 보여주는 앱
 Demo Site 🔗 https://timemash24.github.io/bookmark_app_react/
 
 ## 사용 스택
