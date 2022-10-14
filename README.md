@@ -2,15 +2,16 @@
 태그를 이용하여 정리된 북마크 목록을 보여주는 앱
 <br/>Demo Site 🔗 https://timemash24.github.io/bookmark_app_react/
 
-## 사용 스택
-<img src="https://img.shields.io/badge/React 18.2.0-61DAFB?style=for-the-badge&logo=react&logoColor=black"/> <img src="https://img.shields.io/badge/Javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"/> <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white"/> <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white"/> <img src="https://img.shields.io/badge/Redux 1.8.4-764ABC?style=for-the-badge&logo=redux&logoColor=white"/>
-
-
-
 > 크롬의 북마크바는 폴더식으로 구분되어 특정 북마크를 찾는데 조금 불편했다.
 점점 불어나는 북마크 목록에서 찾고 싶은 북마크를 쉽게 찾고 싶어서 제작하게 되었다.
 폴더 안에 수많은 북마크 목록을 살펴보고 폴더 속의 폴더 속의 북마크를 힘들게 찾지 않고
 북마크에 원하는 태그를 여러개 붙여서 선택한 태그별로 북마크를 볼 수 있다.
+
+
+## 사용 스택
+<img src="https://img.shields.io/badge/React 18.2.0-61DAFB?style=for-the-badge&logo=react&logoColor=black"/> <img src="https://img.shields.io/badge/Javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"/> <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white"/> <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white"/> <img src="https://img.shields.io/badge/Redux 1.8.4-764ABC?style=for-the-badge&logo=redux&logoColor=white"/>
+
+
 
 ## 구현 화면
 
