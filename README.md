@@ -3,7 +3,7 @@
 <br/>Demo Site 🔗 https://timemash24.github.io/bookmark_app_react/
 
 ## 사용 스택
-<img src="https://img.shields.io/badge/React 18.2.0-61DAFB?style=for-the-badge&logo=react&logoColor=white"/> <img src="https://img.shields.io/badge/Javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white"/> <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white"/> <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white"/>
+<img src="https://img.shields.io/badge/React 18.2.0-61DAFB?style=for-the-badge&logo=react&logoColor=white"/> <img src="https://img.shields.io/badge/Javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white"/> <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white"/> <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white"/> <img src="https://img.shields.io/badge/Redux 1.8.4-764ABC?style=for-the-badge&logo=redux&logoColor=white"/>
 
 
 
@@ -12,7 +12,7 @@
 폴더 안에 수많은 북마크 목록을 살펴보고 폴더 속의 폴더 속의 북마크를 힘들게 찾지 않고
 북마크에 원하는 태그를 여러개 붙여서 선택한 태그별로 북마크를 볼 수 있다.
 
-
+## 구현 화면
 
 ![bookmark_app_page](https://user-images.githubusercontent.com/56548122/185840504-c105f9a9-611e-40c4-aba8-c1a8dc0013dd.PNG)
 ![image](https://user-images.githubusercontent.com/56548122/186594448-f41d07f8-d8c6-4058-bd96-c0bf0bd4196e.png)
