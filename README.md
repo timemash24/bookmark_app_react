@@ -11,7 +11,7 @@
 ## 사용 스택
 <img src="https://img.shields.io/badge/React 18.2.0-61DAFB?style=for-the-badge&logo=react&logoColor=black"/> <img src="https://img.shields.io/badge/Javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"/> <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white"/> <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white"/> <img src="https://img.shields.io/badge/Redux 1.8.4-764ABC?style=for-the-badge&logo=redux&logoColor=white"/>
 
-
+## 화면 흐름도
 
 ## 구현 화면
 
