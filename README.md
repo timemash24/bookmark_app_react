@@ -11,12 +11,10 @@
 ## 사용 스택
 <img src="https://img.shields.io/badge/React 18.2.0-61DAFB?style=for-the-badge&logo=react&logoColor=black"/> <img src="https://img.shields.io/badge/Javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"/> <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white"/> <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white"/> <img src="https://img.shields.io/badge/Redux 1.8.4-764ABC?style=for-the-badge&logo=redux&logoColor=white"/>
 
-## 화면 흐름도
-![bookmark_app_flowchart drawio](https://user-images.githubusercontent.com/56548122/201526793-5483b0e6-2ed6-4156-be81-e5095846a30b.png)
-
-
 ## 구현 화면
 
+![bookmark_app_flowchart drawio](https://user-images.githubusercontent.com/56548122/201526823-37991309-03f9-4bd0-b454-8667471dcd71.png)
+<br/>
 ![bookmark_app_page](https://user-images.githubusercontent.com/56548122/185840504-c105f9a9-611e-40c4-aba8-c1a8dc0013dd.PNG)
 ![image](https://user-images.githubusercontent.com/56548122/186594448-f41d07f8-d8c6-4058-bd96-c0bf0bd4196e.png)
 ![image](https://user-images.githubusercontent.com/56548122/186594517-01585fde-2702-44e1-99ae-b38a5f02cd20.png)
